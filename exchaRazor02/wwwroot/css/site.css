@@ -24,34 +24,22 @@
 　    h2:2.0em、以下0.25emずつ縮む
 
 */
+
+/* 全体系-------------------------------------------- */
 /* フォント、背景色など基本スタイル */
 body {
     font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
-    color: #631;
     /* background-color: #ffffe0; */
 }
-/* 装飾用 */
-text.sm {
-    /* font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif; */
-    font-size: 90%;
-    padding: 0.1em;
-}
-
 /* p内では区切り文字がなくとも英字を改行させる */
 p {
     word-wrap: break-word;
 }
 
-/* 改行を禁止し、横幅を超えた文字は隠す */
-.hideOverWidth {
-    white-space: nowrap;
-    overflow: hidden;
-    width: 100%;
-}
-
 /* 見出しのサイズ調整    */
 h1 {
     font-size: 110%;
+    color: #444;
 }/* h1に下線を引く */
 h1::after {
     content: '';
@@ -63,7 +51,8 @@ h1::after {
 }
 h2 {
     font-size: 140%;
-}
+    color: #444;
+    }
 h3 {
     font-size: 120%;
 }
@@ -76,12 +65,41 @@ h5 {
 h6 {
     font-size: 100%;
 }
+/* end 全体系-------------------------------------------- */
+
+/* 一般系 ------------------------------------------------ */
+/* text装飾 */
+text.sm {
+    /* font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif; */
+    font-size: 90%;
+    padding: 0.1em;
+}
+
+/* 改行を禁止し、横幅を超えた文字は隠す */
+.hideOverWidth {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* 左側ブロック見出し    */
+.leftBlock {
+    padding-left: 0.20em;
+    border-left: 0.25em solid;
+    border-color: #f4a460;
+}
 
 /* 下線を引く    */
-.borderline {
+.underline {
     margin-bottom: 0.5em;
     border-bottom: 2px solid;
     border-color: #fffacd;
+}
+/* end 一般系 ------------------------------------------------ */
+
+/* form系 -------------------------------------------- */
+form label {
+    color: black;
 }
 
 /* ラベル位置調整 */
@@ -98,18 +116,13 @@ label.rowRight {
         margin-bottom: 1px;
     }
 }
-
 /* ラジオボタンなど用の位置調整   */
 .radio {
     padding-top: 0.25em;
 }
+/* end form系 -------------------------------------------- */
 
-/* 左側ブロック見出し    */
-.leftBlock {
-    padding-left: 0.20em;
-    border-left: 0.25em solid;
-    border-color: #f4a460;
-}
+
 
 /* ボタン形式のスタイル*/
 .mybtn {

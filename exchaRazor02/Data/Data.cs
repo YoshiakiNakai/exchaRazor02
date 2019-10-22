@@ -50,20 +50,29 @@ namespace exchaRazor02.Data
 		}
 
 		[MaxLength(maxId)]
+		[Display(Name = "日記ID")]
 		public string Id { get; set; }   //主キー	//慣例により「なんたらId」はキーとなる。注意。
 
 		[Required]
+		[Display(Name = "日記の鍵")]
 		public string pass { get; set; }
 
 		[MaxLength(maxNote)]
+		[Display(Name = "付箋")]
 		public string note { get; set; }
 
-		public DateTime last { get; set; }
+		[Display(Name = "最後の日付")]
+		public DateTime last { get; set; }	//最終ログイン
+
+		[Display(Name = "公開非公開")]
 		public PUBLICITY pub { get; set; }
-		public EXCHA excha { get; set; }
-		public WRITA writa { get; set; }
-		public DateTime retTime { get; set; }
-		public string exid { get; set; }
+
+		public EXCHA excha { get; set; }	//交換可不可
+		public WRITA writa { get; set; }    //記述可不可
+
+		[Display(Name = "返す日")]
+		public DateTime retTime { get; set; }	//
+		public string exid { get; set; }	//交換相手
 
 		//Navigation Property
 		public List<Leaf> leaves { get; set; }   //leavesは、制約される。

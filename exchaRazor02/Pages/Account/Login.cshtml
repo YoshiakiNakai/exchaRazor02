@@ -7,10 +7,10 @@
 <h1>ログインページ</h1>
 
 <h2 class="leftBlock">日記を手に取る</h2>
-<form method="post" asp-controller="register">
+<form method="post">
     <!-- 日記ID -->
     <div class="form-group row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <label asp-for="Input.diaryId" class="control-label rowRight" for="diaryId">日記ID</label>
         </div>
         <div class="col-sm-6">
@@ -21,21 +21,21 @@
 
     <!-- パスワード -->
     <div class="form-group row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <label asp-for="Input.pass" class="control-label rowRight">日記の鍵</label>
         </div>
         <div class="col-sm-6">
-            <input id="pass1" type="password" asp-for="Input.pass" class="form-control" required placeholder="日記の鍵を入力" />
+            <input type="password" asp-for="Input.pass" class="form-control" required placeholder="日記の鍵を入力" />
             <span asp-validation-for="Input.pass" class="text-danger"></span>
         </div>
     </div>
     <!-- 送信 -->
     <div class="form-group row">
-        <div class="offset-sm-3">
-            <input type="submit" value="送信" class="mybtn" style="margin-left: 1em;" />
+        <div class="offset-sm-2">
+            <input type="submit" value="開く" class="mybtn" style="margin-left: 1em;" />
         </div>
     </div>
 </form>
 
 <h2 class="leftBlock">日記をまだ作っていない方はこちら</h2>
-<a href="#" class="h5 lineLink" style="margin-left:1em;">日記を新しく作る</a>
+<a asp-page="/Create" class="h5 lineLink" style="margin-left:1em;">日記を新しく作る</a>
