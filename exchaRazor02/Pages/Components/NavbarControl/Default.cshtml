@@ -1,0 +1,24 @@
+@using System.Security.Claims;
+@model ClaimsPrincipal
+
+<li class="nav-item">
+    <a class="nav-link" href="~/">ホーム</a>
+</li>
+<li class="nav-item">
+    @{
+        //ログイン中のとき、「マイページ」を表示する
+        //ログイン中でないとき、「ログイン」を表示する
+        //ログイン中か
+        if (Model.Identity.IsAuthenticated)
+        {
+            <a asp-page="/My" class="nav-link">マイページ</a>
+        }//ログイン中でないとき
+        else
+        {
+            <a asp-page="/Account/Login" class="nav-link">ログイン</a>
+        }
+    }
+</li>
+<li class="nav-item">
+    <a asp-page="#" class="nav-link">日記一覧</a>
+</li>

@@ -1,0 +1,278 @@
+﻿/* メモ
+    指定方法
+    　「.」クラス指定、ドットがよく抜けるため注意
+    　「#」id指定
+    　「」なしで要素指定
+    　「>」>つなぎで、直下の子要素指定
+    　「 」スペース繋ぎで、子孫要素指定。スペース入れてると子孫指定になるので:notなどの指定でスペース空けないこと
+    　他、http://www.htmq.com/csskihon/005.shtml
+
+    寄せるクラス
+    　text-align
+    　float
+
+    リンク、<a>の装飾について
+    　hover時の下線などは、text-decoration: none;で外せる
+    　選択時の縁取りは、outline: none;で消せる
+
+    ボタン選択時の縁取りについて
+        outline: none;で選択時の周りの縁取りを消す
+
+    bootstrap
+　    sm:768pxが境
+　    h1:2.5em
+　    h2:2.0em、以下0.25emずつ縮む
+
+*/
+/* フォント、背景色など基本スタイル */
+body {
+    font-family: 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', メイリオ, Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+    color: #631;
+    /* background-color: #ffffe0; */
+}
+/* 装飾用 */
+text.sm {
+    /* font-family: Quicksand, 游ゴシック体, "Yu Gothic", YuGothic, "ヒラギノ角ゴシック Pro", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif; */
+    font-size: 90%;
+    padding: 0.1em;
+}
+
+/* p内では区切り文字がなくとも英字を改行させる */
+p {
+    word-wrap: break-word;
+}
+
+/* 改行を禁止し、横幅を超えた文字は隠す */
+.hideOverWidth {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* 見出しのサイズ調整    */
+h1 {
+    font-size: 110%;
+}/* h1に下線を引く */
+h1::after {
+    content: '';
+    display: block; /* 改行する */
+    background-color: #fffacd;
+    height: 2px;
+    margin-top: 0.3em;
+    margin-bottom: 0.6em;
+}
+h2 {
+    font-size: 140%;
+}
+h3 {
+    font-size: 120%;
+}
+h4 {
+    font-size: 110%;
+}
+h5 {
+    font-size: 100%;
+}
+h6 {
+    font-size: 100%;
+}
+
+/* 下線を引く    */
+.borderline {
+    margin-bottom: 0.5em;
+    border-bottom: 2px solid;
+    border-color: #fffacd;
+}
+
+/* ラベル位置調整 */
+label.rowRight {
+    float: left;
+    padding-top: 0.25em;
+    margin-bottom: 1px;
+}/* 画面サイズの横幅が 768px 以上のとき    */
+@media screen and (min-width: 768px)
+{
+    label.rowRight {
+        float: right;
+        padding-top: 0.25em;
+        margin-bottom: 1px;
+    }
+}
+
+/* ラジオボタンなど用の位置調整   */
+.radio {
+    padding-top: 0.25em;
+}
+
+/* 左側ブロック見出し    */
+.leftBlock {
+    padding-left: 0.20em;
+    border-left: 0.25em solid;
+    border-color: #f4a460;
+}
+
+/* ボタン形式のスタイル*/
+.mybtn {
+    position: relative;
+    display: inline-block;
+    padding: 0.25em 0.75em;
+    text-decoration: none;
+    color: #fff;
+    background-color: #620;
+    border-color: #fed;
+    border-radius: 6px; /*角の丸み*/
+    font-weight: bold;
+    outline: none;  /* 選択時の周りの縁取りを消す    */
+}/* マウスホバー時 */
+.mybtn:hover {
+    background-color: #b41;
+}/* マウスクリック時    */
+.mybtn:active {
+    background-color: #f83;
+}
+
+/* リンク ボタン型 */
+a.btnLink {
+    position: relative;
+    display: inline-block;
+    padding: 0.25em 0.75em;
+    color: #fff;    /* 文字の色 */
+    background-color: #731;
+    border-color: #fed;
+    border-radius: 6px; /*角の丸み*/
+    outline: none; /* 選択時の周りの縁取りを消す    */
+}
+/* マウスホバー時 */
+a.btnLink:hover {
+    background-color: #b41;
+    text-decoration: underline; /* textに下線を引く*/
+}
+/* マウスクリック時    */
+a.btnLink:active {
+    background-color: #f83;
+}
+
+/* リンク 下線アニメ */
+a.lineLink {
+    padding: 0.2em 0.3em;
+    position: relative;
+    display: inline-block;
+    transition: .2s;
+    color: #831; /* 文字の色 */
+    text-decoration: none;
+}/* ホバー時、文字を下げる    */
+a.lineLink:hover {
+    transform: translate(0, 0.04em);
+}/* 下線の疑似要素 */
+a.lineLink::after {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	content: '';
+	width: 0;
+	height: 1px;
+	background-color: #f4a460; /* 下線の色 */
+	transition: .2s;
+}/* ホバー時、下線要素の幅を100%にする    */
+a.lineLink:hover::after {
+    width: 100%;
+}
+
+/* table head要素 */
+table.mytbl.table.table-striped > thead > tr {
+    background-color: #deb887;
+}
+/* table row要素 */
+table.mytbl.table.table-striped > tbody > tr {
+    background-color: #ffffe0;
+}/* 奇数列 */
+table.mytbl.table.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #fffacd;
+}/* ホバー時 */
+table.mytbl.table.table-striped > tbody > tr:hover {
+    background-color: #f5deb3;
+}
+
+/* navbar */
+.navbar.navbar-expand-sm.navbar-toggleable-sm.navbar-light {
+    background-color: #f5deb3;
+}
+
+/* 以下、default設定 ------------------------------------------------    */
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+a.navbar-brand{
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+
+/* ボタンのスタイル */
+.btn-primary {
+    color: #fff;
+    background-color: #620;
+    border-color: #fed;
+}/* マウスホバー時    */
+.btn-primary:hover {
+    background-color: #b41;
+}/* マウスクリック時、どこかと競合しているのか変化しない    */
+.btn-primary:active {
+    background-color: #f83;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}

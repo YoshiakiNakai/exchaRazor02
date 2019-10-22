@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "exchaRazor02", "exchaRazor02\exchaRazor02.csproj", "{18624D5D-A8DE-407A-89F0-7C46C824D78E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject1", "XUnitTestProject1\XUnitTestProject1.csproj", "{24901CE5-D487-4F50-80F4-F6369A1AF6AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18624D5D-A8DE-407A-89F0-7C46C824D78E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18624D5D-A8DE-407A-89F0-7C46C824D78E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18624D5D-A8DE-407A-89F0-7C46C824D78E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18624D5D-A8DE-407A-89F0-7C46C824D78E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24901CE5-D487-4F50-80F4-F6369A1AF6AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24901CE5-D487-4F50-80F4-F6369A1AF6AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24901CE5-D487-4F50-80F4-F6369A1AF6AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24901CE5-D487-4F50-80F4-F6369A1AF6AF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D292841-2FD7-4378-B139-B1D9638AB871}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,33 @@
+﻿@page
+@using System.Security.Claims;
+@model exchaRazor02.Pages.IndexModel
+@{
+    ViewData["Title"] = "日記交換サイト";
+}
+
+<h1>ホーム</h1>
+
+<p>サイト紹介</p>
+
+<br /><a href="/Account/Login/" class="lineLink">ログイン</a>
+
+<br />
+<form method="post">
+    <button type="submit" class="mybtn">ログアウト</button>
+</form>
+
+<br /><a href="#">会員登録</a>
+<br /><a href="#">マイページ</a>
+<br /><a href="#">日記一覧</a>
+
+<br />ID:
+@{
+    if (HttpContext.User.Identity.IsAuthenticated)
+    {
+        @(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
+    }
+    else
+    {
+        @("未ログイン")
+    }
+}

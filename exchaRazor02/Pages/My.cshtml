@@ -1,0 +1,20 @@
+﻿@page
+@using System.Security.Claims;
+@model exchaRazor02.Pages.MyModel
+@{
+    ViewData["Title"] = "マイページ";
+}
+
+<h1>マイページ</h1>
+<h2 class="leftBlock">日記：<text class="sm">@(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)</text></h2>
+
+<a href="/Pages/diary" class="h5 lineLink">日記を開く</a>
+
+<br />
+<a href="/Pages/diaries" class="h5 lineLink">交換相手を探す</a>
+
+<br />
+<a href="/Pages/elect" class="h5 lineLink">交換リクエストに応じる</a>
+
+<br />
+<a href="/#settings" class="h5 lineLink">日記の設定</a>

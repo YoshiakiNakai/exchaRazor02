@@ -1,0 +1,41 @@
+﻿@page
+@model exchaRazor02.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "ログインページ";
+}
+
+<h1>ログインページ</h1>
+
+<h2 class="leftBlock">日記を手に取る</h2>
+<form method="post" asp-controller="register">
+    <!-- 日記ID -->
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <label asp-for="Input.diaryId" class="control-label rowRight" for="diaryId">日記ID</label>
+        </div>
+        <div class="col-sm-6">
+            <input id="diaryId" asp-for="Input.diaryId" class="form-control" required placeholder="日記IDを入力" />
+            <span asp-validation-for="Input.diaryId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <!-- パスワード -->
+    <div class="form-group row">
+        <div class="col-sm-3">
+            <label asp-for="Input.pass" class="control-label rowRight">日記の鍵</label>
+        </div>
+        <div class="col-sm-6">
+            <input id="pass1" type="password" asp-for="Input.pass" class="form-control" required placeholder="日記の鍵を入力" />
+            <span asp-validation-for="Input.pass" class="text-danger"></span>
+        </div>
+    </div>
+    <!-- 送信 -->
+    <div class="form-group row">
+        <div class="offset-sm-3">
+            <input type="submit" value="送信" class="mybtn" style="margin-left: 1em;" />
+        </div>
+    </div>
+</form>
+
+<h2 class="leftBlock">日記をまだ作っていない方はこちら</h2>
+<a href="#" class="h5 lineLink" style="margin-left:1em;">日記を新しく作る</a>
