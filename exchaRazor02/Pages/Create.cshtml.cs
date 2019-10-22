@@ -9,13 +9,16 @@ using exchaRazor02.Data;
 
 namespace exchaRazor02.Pages
 {
-    public class CreateModel : PageModel
+	[AutoValidateAntiforgeryToken]
+	public class CreateModel : PageModel
     {
         private readonly exchaRazor02.Data.ExchaDContext5 _context;
-
+		
+		//コンストラクタ
         public CreateModel(exchaRazor02.Data.ExchaDContext5 context)
         {
             _context = context;
+			this.Diary = new Diary(null, null, null, DateTime.Now, PUBLICITY.pub, EXCHA.disable, WRITA.able, DateTime.Now, null);
         }
 
         public IActionResult OnGet()
@@ -26,19 +29,18 @@ namespace exchaRazor02.Pages
         [BindProperty]
         public Diary Diary { get; set; }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+		//POST
+		public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+			if (!ModelState.IsValid) return Page();
 
-            _context.diaries.Add(Diary);
+			this.Diary.last = DateTime.Now;
+			this.Diary.retTime = DateTime.Now;
+
+			_context.diaries.Add(Diary);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Account/Login");
         }
-    }
+	}
 }
