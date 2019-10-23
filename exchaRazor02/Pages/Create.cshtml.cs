@@ -6,19 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using exchaRazor02.Data;
+using Microsoft.Extensions.Logging;
+using System.Data.Common;	//DbException
 
 namespace exchaRazor02.Pages
 {
 	[AutoValidateAntiforgeryToken]
 	public class CreateModel : PageModel
     {
-        private readonly exchaRazor02.Data.ExchaDContext5 _context;
+		private readonly ILogger<CreateModel> _logger;
+		private readonly exchaRazor02.Data.ExchaDContext5 _context;
 		
 		//コンストラクタ
-        public CreateModel(exchaRazor02.Data.ExchaDContext5 context)
+        public CreateModel(ILogger<CreateModel> logger, exchaRazor02.Data.ExchaDContext5 context)
         {
-            _context = context;
-			this.Diary = new Diary(null, null, null, DateTime.Now, PUBLICITY.pub, EXCHA.disable, WRITA.able, DateTime.Now, null);
+			_logger = logger;
+			_context = context;
+			Diary = new Diary();
         }
 
         public IActionResult OnGet()
@@ -34,13 +38,29 @@ namespace exchaRazor02.Pages
         {
 			if (!ModelState.IsValid) return Page();
 
+			//日記、その他の項目を初期設定する。(id, pass, note, pubは、POSTされた値を使用する)
 			this.Diary.last = DateTime.Now;
+			this.Diary.excha = EXCHA.disable;
+			this.Diary.writa = WRITA.able;
 			this.Diary.retTime = DateTime.Now;
+			this.Diary.exid = null;
 
 			_context.diaries.Add(Diary);
-            await _context.SaveChangesAsync();
+			await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Account/Login");
+			//DBへ保存する
+			try
+			{
+			}
+			catch (Exception ex)
+			{
+				//DbException
+				//抽象クラス、これを継承してDBのエラーごとに具体クラスを作って使う。
+				//https://docs.microsoft.com/ja-jp/dotnet/api/system.data.common.dbexception?view=netframework-4.8
+				_logger.Log(LogLevel.Error, ex.Message);
+				return RedirectToPage("/Error");
+			}
+			return RedirectToPage("/Account/Login");
         }
 	}
 }

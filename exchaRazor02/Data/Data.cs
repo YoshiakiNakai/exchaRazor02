@@ -31,9 +31,6 @@ namespace exchaRazor02.Data
 	//日記データ
 	public class Diary
 	{
-		const int maxId = 255;
-		const int maxNote = 255;
-
 		//コンストラクタ
 		public Diary(){}
 		public Diary(string Id, string pass, string note, DateTime last, PUBLICITY pub, EXCHA excha, WRITA writa, DateTime retTime, string exid)
@@ -49,15 +46,17 @@ namespace exchaRazor02.Data
 			this.exid = exid;
 		}
 
-		[MaxLength(maxId)]
+		[Required]
+		[MaxLength(255)]
 		[Display(Name = "日記ID")]
 		public string Id { get; set; }   //主キー	//慣例により「なんたらId」はキーとなる。注意。
 
 		[Required]
+		[MinLength(4)]
 		[Display(Name = "日記の鍵")]
 		public string pass { get; set; }
 
-		[MaxLength(maxNote)]
+		[MaxLength(255)]
 		[Display(Name = "付箋")]
 		public string note { get; set; }
 

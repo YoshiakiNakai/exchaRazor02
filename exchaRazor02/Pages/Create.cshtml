@@ -11,33 +11,21 @@
             <!-- 日記ID -->
             <div class="form-group">
                 <label asp-for="Diary.Id" class="control-label"></label>
-                <input asp-for="Diary.Id" class="form-control" placeholder="日記にIDを付けてください" />
+                <input asp-for="Diary.Id" onchange="checkDuplicateKey(this)" class="form-control" placeholder="日記にIDを付けてください" />
                 <span asp-validation-for="Diary.Id" class="text-danger"></span>
             </div>
             <!-- パスワード1 -->
             <div class="form-group">
                 <label asp-for="Diary.pass" class="control-label"></label>
-                <input type="password" asp-for="Diary.pass" class="form-control" placeholder="日記に鍵をかけてください" />
+                <input asp-for="Diary.pass" type="password" onchange="confirmPass2()" class="form-control" placeholder="日記に鍵をかけてください" />
                 <span asp-validation-for="Diary.pass" class="text-danger"></span>
             </div>
             <!-- パスワード2 -->
             <div class="form-group">
                 <label for="Diary_pass2" class="control-label">鍵の確認</label>
-                <input type="password" id="Diary_pass2" required onchange="confirmPass2(this)" class="form-control" placeholder="鍵をもう一度入力してください" />
-                <span id="pass_alarm" class="text-danger"></span>
+                <input id="Diary_pass2" type="password" required onchange="confirmPass2()" class="form-control" placeholder="鍵をもう一度入力してください" />
+                <span id="pass_alarm2" class="text-danger"></span>
             </div>
-            <script>
-                //パスワード一致確認
-                //引数１：この関数を呼び出した要素
-                function confirmPass2(pass2) {
-                    //入力パスワード1, 2が一致しているか
-                    if (pass2.value == l('Diary_pass').value) {
-                        l('pass_alarm').innerText = "";
-                    } else {
-                        l('pass_alarm').innerText = "パスワードが一致していません";
-                    }
-                }
-            </script>
             <!-- ノート -->
             <div class="form-group">
                 <label asp-for="Diary.note" class="control-label"></label>
@@ -65,3 +53,77 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+<script>
+    //パスワード形式確認
+    function confirmPass2() {
+        pass1 = l('Diary_pass');
+        pass2 = l('Diary_pass2');
+        alarm2 = l('pass_alarm2');
+
+        //入力パスワード1, 2の一致チェック
+        if (pass1.value != pass2.value) {
+            //一致していないとき
+            alarm2.innerText = "パスワードが一致していません";
+        } else {
+            //形式OKのとき
+            alarm2.innerText = "";
+        }
+    }
+
+    //HTMLフォームの形式にデータを変換する  //"application/x-www-form-urlencoded"
+    //引数１：データ。例、{ param1: 'abc', param2: 100 }
+    //戻り値：変換後データ。例、"param1=abc&param2=100"
+    function encodeHTMLForm(data)
+    {
+        let params = [];    //データの入れ物を宣言
+        //データ形式を変換する
+        //例、param1=abc&param2=100
+        for(let name in data)
+        {
+            //URIエンコードして、'='で繋げる。
+            let value = data[name];
+            let param = encodeURIComponent(name) + '=' + encodeURIComponent(value);
+            params.push(param);
+        }
+        //配列を'&'で結合する   //半角スペース%20を'+'に置き換える。
+        return params.join( '&' ).replace( /%20/g, '+' );
+    }
+
+    //ID重複確認
+    //引数１：この関数を呼び出した要素
+    function checkDuplicateKey(diaryId) {   //l()と同一のインスタンス
+
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', '/api/Create/' + diaryId.value, true);
+
+        xhr.onload = function () {
+            console.log(this);
+        };
+
+        xhr.send(null);
+        // xhr.send('string');
+
+
+        //var data = { "Diary.Id": diaryId.value }; // POSTメソッドで送信するデータ
+
+        ////XMLHttpRequestの設定
+        //var xhr = new XMLHttpRequest();
+        //xhr.open("POST", '/api/Create', true);
+        //xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        ////受信時の処理
+        //xhr.onreadystatechange = function() { // 状態が変化すると関数が呼び出されます。
+        //    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                
+
+        //    } else {
+        //        console.log("サーバとの通信に失敗しました")
+        //    }
+        //}
+        //console.log(encodeHTMLForm(data));
+        ////送信
+        //xhr.send(encodeHTMLForm(data));
+    }
+</script>
+

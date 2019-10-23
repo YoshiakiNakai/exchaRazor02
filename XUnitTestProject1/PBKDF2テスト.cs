@@ -1,13 +1,28 @@
 using System;
 using Xunit;
+using Microsoft.Extensions.Logging;
+using PasswordHashing;
 
-namespace PasswordHashing
+namespace XUnitTestProject1
 {
 	public class PBKDF2テスト
 	{
-		//つかえない
-		//System.Diagnostics.Trace.WriteLine("テストメッセージ\n\n\n");
-		//System.Diagnostics.Debug.WriteLine(hash);
+		private readonly ILogger<PBKDF2テスト> _logger;
+
+		public PBKDF2テスト()
+		{
+			var loggerFactory = LoggerFactory.Create(builder =>
+			{
+				builder
+					.AddFilter("Microsoft", LogLevel.Warning)
+					.AddFilter("System", LogLevel.Warning)
+					.AddConsole()
+					.AddDebug()
+					.AddEventLog();
+			});
+			_logger = loggerFactory.CreateLogger<PBKDF2テスト>();
+			_logger.Log(LogLevel.Information, "PBKDF2テスト logger");
+		}
 
 		private const string HUNDRED_STR = "1234567890223456789032345678904234567890523456789062345678907234567890823456789092345678909234567890";
 		private const string HUNDRED_ONE_STR = HUNDRED_STR + "1";

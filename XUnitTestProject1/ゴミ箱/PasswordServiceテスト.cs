@@ -1,7 +1,8 @@
 using System;
 using Xunit;
+using PasswordHash.Lib;
 
-namespace PasswordHash.Lib.Test
+namespace XUnitTestProject1
 {
 	public class PasswordServiceƒeƒXƒg
 	{
