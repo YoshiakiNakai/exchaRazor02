@@ -197,10 +197,10 @@ table.mytbl.table.table-striped > thead > tr {
 }
 /* table row要素 */
 table.mytbl.table.table-striped > tbody > tr {
-    background-color: #ffffe0;
+    background-color: #ffffe0;  
 }/* 奇数列 */
 table.mytbl.table.table-striped > tbody > tr:nth-of-type(odd) {
-    background-color: #fffacd;
+    background-color: #fffafa;
 }/* ホバー時 */
 table.mytbl.table.table-striped > tbody > tr:hover {
     background-color: #f5deb3;

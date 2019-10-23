@@ -18,11 +18,11 @@ namespace exchaRazor02.Pages
             _context = context;
         }
 
-        public IList<Diary> Diary { get;set; }
+        public IList<Diary> Diaries { get;set; }
 
         public async Task OnGetAsync()
         {
-            Diary = await _context.diaries.ToListAsync();
+            Diaries = await _context.diaries.ToListAsync();
         }
     }
 }

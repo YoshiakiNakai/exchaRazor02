@@ -4,69 +4,40 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-striped table-hover mytbl">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Diary[0].pass)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Diary[0].note)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Diary[0].last)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Diary[0].pub)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Diary[0].excha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Diary[0].writa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Diary[0].retTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Diary[0].exid)
-            </th>
+            <th>@Html.DisplayNameFor(model => model.Diaries[0].Id)</th>
+            <th>@Html.DisplayNameFor(model => model.Diaries[0].pass)</th>
+            <th>@Html.DisplayNameFor(model => model.Diaries[0].note)</th>
+            <th>@Html.DisplayNameFor(model => model.Diaries[0].last)</th>
+            <th>@Html.DisplayNameFor(model => model.Diaries[0].pub)</th>
+            <th>@Html.DisplayNameFor(model => model.Diaries[0].excha)</th>
+            <th>@Html.DisplayNameFor(model => model.Diaries[0].writa)</th>
+            <th>@Html.DisplayNameFor(model => model.Diaries[0].retTime)</th>
+            <th>@Html.DisplayNameFor(model => model.Diaries[0].exid)</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Diary) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.pass)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.last)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.pub)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.excha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.writa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.retTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.exid)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Diaries)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                <td>@Html.DisplayFor(modelItem => item.pass)</td>
+                <td>@Html.DisplayFor(modelItem => item.note)</td>
+                <td>@Html.DisplayFor(modelItem => item.last)</td>
+                <td>@Html.DisplayFor(modelItem => item.pub)</td>
+                <td>@Html.DisplayFor(modelItem => item.excha)</td>
+                <td>@Html.DisplayFor(modelItem => item.writa)</td>
+                <td>@Html.DisplayFor(modelItem => item.retTime)</td>
+                <td>@Html.DisplayFor(modelItem => item.exid)</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
