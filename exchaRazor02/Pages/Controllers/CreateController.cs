@@ -24,7 +24,7 @@ namespace exchaRazor02.Pages.Controllers
 		//日記IDが存在するか
 		//戻り値：true ある、false ない
 		[HttpPost]
-		public async Task<ActionResult<bool>> exist(string id)
+		public ActionResult<bool> exist(string id)
 		{
 			//POSTデータを取得する
 			// 引数で受け取る方法がわからないので、HttpContextから取得する

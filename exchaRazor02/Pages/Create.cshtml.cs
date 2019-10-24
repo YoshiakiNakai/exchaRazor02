@@ -60,7 +60,7 @@ namespace exchaRazor02.Pages
 			try {
 				await _context.SaveChangesAsync();
 			} catch (DbUpdateException ex) {
-				//_logger.Log(LogLevel.Error, ex.Message);
+				_logger.Log(LogLevel.Error, ex.Message);
 				//id重複確認
 				if (_context.diaries.Any(e => e.Id == Diary.Id)) {
 					this.message = "エラー：既に使用されているIDです";

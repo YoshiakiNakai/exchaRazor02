@@ -13,11 +13,6 @@ namespace exchaRazor02.Pages
 	public class ErrorModel : PageModel
 	{
 		public string status;
-		//public void OnGet()
-		//{
-
-		//}
-
 		public void OnGet(string code)
 		{
 			status = code;

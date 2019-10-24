@@ -14,25 +14,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Leaf[0].title)
+                @Html.DisplayNameFor(model => model.leaves[0].title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Leaf[0].contents)
+                @Html.DisplayNameFor(model => model.leaves[0].contents)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Leaf[0].exid)
+                @Html.DisplayNameFor(model => model.leaves[0].exid)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Leaf[0].comment)
+                @Html.DisplayNameFor(model => model.leaves[0].comment)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Leaf[0].diary)
+                @Html.DisplayNameFor(model => model.leaves[0].diary)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Leaf) {
+@foreach (var item in Model.leaves) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.title)

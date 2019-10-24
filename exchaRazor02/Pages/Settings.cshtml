@@ -3,7 +3,7 @@
 @using exchaRazor02.Data;
 
 @{
-    ViewData["Title"] = "日記の設定";
+    ViewData["Title"] = "設定";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -14,16 +14,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <!-- ノート -->
             <div class="form-group">
-                <label asp-for="form.note" class="control-label"></label>
+                <label asp-for="form.note" class="control-label">付箋</label>
                 <textarea asp-for="form.note" class="form-control" placeholder="日記の紹介などご自由にどうぞ" rows="2"></textarea>
                 <span asp-validation-for="form.note" class="text-danger"></span>
             </div>
             <!-- 公開非公開 -->
             <div class="form-group">
+                <label class="control-label">日記の公開非公開</label><br />
                 <input asp-for="form.pub" type="radio" value="@PUBLICITY.pub">
-                <label for="form_pub" style="color:black">公開　</label>
-                <input asp-for="form.pub" type="radio" value="@PUBLICITY.pri">
-                <label for="form_pri" style="color:black">非公開　</label>
+                <label asp-for="form.pub" style="color:black">公開　</label>
+                <input asp-for="form.pub" id="form_pri" type="radio" value="@PUBLICITY.pri">
+                <label asp-for="form.pub" for="form_pri" style="color:black">非公開　</label>
             </div>
             <div class="form-group">
                 <input type="submit" value="変更" class="mybtn" />

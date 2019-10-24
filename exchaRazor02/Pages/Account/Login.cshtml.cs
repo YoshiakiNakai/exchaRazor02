@@ -87,7 +87,7 @@ namespace exchaRazor02.Pages.Account
 			  new AuthenticationProperties
 			  {
 				  IsPersistent = false,  //ブラウザを閉じたとき、ログインを維持するか
-				  ExpiresUtc = DateTime.UtcNow.AddSeconds(10),
+				  ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
 			  });
 			return LocalRedirect(returnUrl ?? Url.Content("~/"));
 		}
