@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using exchaRazor02.Data;
 using Microsoft.Extensions.Logging;
-using System.Data.Common;	//DbException
+using Microsoft.EntityFrameworkCore;
+
 
 namespace exchaRazor02.Pages
 {
@@ -45,21 +46,31 @@ namespace exchaRazor02.Pages
 			this.Diary.retTime = DateTime.Now;
 			this.Diary.exid = null;
 
+			//DBへ保存する
 			_context.diaries.Add(Diary);
 			await _context.SaveChangesAsync();
-
-			//DBへ保存する
 			try
 			{
+
+			}
+			catch (DbUpdateException)
+			{
+				if (_context.diaries.Any(e => e.Id == Diary.Id))
+				{
+					//id重複
+					return RedirectToPage("/Error");
+				}
+				else
+				{
+					throw;
+				}
 			}
 			catch (Exception ex)
 			{
-				//DbException
-				//抽象クラス、これを継承してDBのエラーごとに具体クラスを作って使う。
-				//https://docs.microsoft.com/ja-jp/dotnet/api/system.data.common.dbexception?view=netframework-4.8
 				_logger.Log(LogLevel.Error, ex.Message);
 				return RedirectToPage("/Error");
 			}
+
 			return RedirectToPage("/Account/Login");
         }
 	}
