@@ -68,6 +68,13 @@ namespace exchaRazor02.Pages.Account
 			}
 			//認証成功
 
+			//ログイン日時をDBへ保存
+			diary.last = DateTime.Now;
+			_context.Attach(diary).State = EntityState.Modified;
+			//try {
+			await _context.SaveChangesAsync();
+			//} catch (Exception ex) { }
+
 			//ログイン処理
 			//認証情報の登録
 			var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);	//Cookie認証を利用する
@@ -79,7 +86,8 @@ namespace exchaRazor02.Pages.Account
 			  new ClaimsPrincipal(identity),
 			  new AuthenticationProperties
 			  {
-				  IsPersistent = false	//ブラウザを閉じたとき、ログインを維持するか
+				  IsPersistent = false,  //ブラウザを閉じたとき、ログインを維持するか
+				  ExpiresUtc = DateTime.UtcNow.AddSeconds(10),
 			  });
 			return LocalRedirect(returnUrl ?? Url.Content("~/"));
 		}
