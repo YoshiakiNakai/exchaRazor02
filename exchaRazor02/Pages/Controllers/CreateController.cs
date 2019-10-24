@@ -20,43 +20,20 @@ namespace exchaRazor02.Pages.Controllers
             _context = context;
         }
 
-        // GET: api/Create
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Diary>>> Getdiaries()
-        {
-            return await _context.diaries.ToListAsync();
-        }
-
-        // GET: api/Create/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Diary>> GetDiary(string id)
-        {
-            var diary = await _context.diaries.FindAsync(id);
-
-            if (diary == null)
-            {
-                return NotFound();
-            }
-
-            return diary;
-        }
-
-		// POST: api/Create
+		//POST: api/Create
+		//日記IDが存在するか
+		//戻り値：true ある、false ない
 		[HttpPost]
 		public async Task<ActionResult<bool>> exist(string id)
 		{
+			//POSTデータを取得する
+			// 引数で受け取る方法がわからないので、HttpContextから取得する
 			var form = HttpContext.Request.Form;
 			Microsoft.Extensions.Primitives.StringValues value;
 			form.TryGetValue("id", out value);
 			id = value.ToString();
 
-			return _context.diaries.Any(e => e.Id == id);
+			return (_context.diaries.Any(e => e.Id == id));
 		}
-
-		private bool DiaryExists(string id)
-		{
-			return _context.diaries.Any(e => e.Id == id);
-		}
-
 	}
 }

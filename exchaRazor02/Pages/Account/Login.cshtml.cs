@@ -4,6 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -11,14 +15,23 @@ using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
+using exchaRazor02.Data;
+using PasswordHashing;
+
 namespace exchaRazor02.Pages.Account
 {
-    public class LoginModel : PageModel
+	[AutoValidateAntiforgeryToken]
+	public class LoginModel : PageModel
     {
-		public void OnGet()
-		{
+		private readonly exchaRazor02.Data.ExchaDContext5 _context;
 
+		//コンストラクタ
+		public LoginModel(exchaRazor02.Data.ExchaDContext5 context)
+		{
+			_context = context;
 		}
+
+		public void OnGet() { }
 
 		//ログインフォームのデータとバインド
 		[BindProperty]
@@ -35,7 +48,7 @@ namespace exchaRazor02.Pages.Account
 		}
 
 		[TempData]
-		public string ErrorMessage { get; set; }
+		public string message { get; set; }
 
 
 		//Post
@@ -45,8 +58,15 @@ namespace exchaRazor02.Pages.Account
 			if (!ModelState.IsValid) return Page();
 
 			//認証処理
-
-			//if (!isValid) return Page();
+			Diary diary = await _context.diaries.FindAsync(Input.diaryId);
+			if(diary == null) {
+				message = "エラー：日記が見つかりません";
+				return Page();
+			} else if(!PBKDF2.Verify(Input.pass, diary.pass)) {
+				message = "エラー：鍵が一致しません";
+				return Page();
+			}
+			//認証成功
 
 			//ログイン処理
 			//認証情報の登録

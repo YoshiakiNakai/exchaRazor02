@@ -9,6 +9,8 @@ using exchaRazor02.Data;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
+using System.Security.Cryptography;
+using PasswordHashing;
 
 namespace exchaRazor02.Pages
 {
@@ -24,7 +26,8 @@ namespace exchaRazor02.Pages
 			_logger = logger;
 			_context = context;
 			Diary = new Diary();
-        }
+			message = null;
+		}
 
         public IActionResult OnGet()
         {
@@ -34,12 +37,18 @@ namespace exchaRazor02.Pages
         [BindProperty]
         public Diary Diary { get; set; }
 
+		[TempData]
+		public string message { get; set; }
+
 		//POST
 		public async Task<IActionResult> OnPostAsync()
         {
 			if (!ModelState.IsValid) return Page();
 
-			//日記、その他の項目を初期設定する。(id, pass, note, pubは、POSTされた値を使用する)
+			//パスワードをハッシュ化する
+			this.Diary.pass = PBKDF2.Hash(this.Diary.pass).ToString();
+
+			//日記、その他の項目を初期設定する。(id, note, pubは、POSTされた値を使用する)
 			this.Diary.last = DateTime.Now;
 			this.Diary.excha = EXCHA.disable;
 			this.Diary.writa = WRITA.able;
@@ -47,30 +56,22 @@ namespace exchaRazor02.Pages
 			this.Diary.exid = null;
 
 			//DBへ保存する
-			_context.diaries.Add(Diary);
-			await _context.SaveChangesAsync();
-			try
-			{
-
-			}
-			catch (DbUpdateException)
-			{
-				if (_context.diaries.Any(e => e.Id == Diary.Id))
-				{
-					//id重複
-					return RedirectToPage("/Error");
-				}
-				else
-				{
+			try {
+				_context.diaries.Add(Diary);
+				await _context.SaveChangesAsync();
+			} catch (DbUpdateException ex) {
+				_logger.Log(LogLevel.Error, ex.Message);
+				//id重複確認
+				if (_context.diaries.Any(e => e.Id == Diary.Id)) {
+					this.message = "エラー：既に使用されているIDです";
+					return Page();
+				} else {
 					throw;
 				}
-			}
-			catch (Exception ex)
-			{
+			} catch (Exception ex) {
 				_logger.Log(LogLevel.Error, ex.Message);
 				return RedirectToPage("/Error");
 			}
-
 			return RedirectToPage("/Account/Login");
         }
 	}

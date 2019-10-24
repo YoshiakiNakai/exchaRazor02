@@ -4,6 +4,8 @@
 
 <h1>日記を作る</h1>
 
+<span class="text-danger">@Model.message</span>
+
 <div class="row">
     <div class="col-md-4">
         <form method="post">
@@ -13,6 +15,7 @@
                 <label asp-for="Diary.Id" class="control-label"></label>
                 <input asp-for="Diary.Id" onchange="checkDuplicateKey(this)" class="form-control" placeholder="日記にIDを付けてください" />
                 <span asp-validation-for="Diary.Id" class="text-danger"></span>
+                <span id="id_alarm" class="text-black-50"></span>
             </div>
             <!-- パスワード1 -->
             <div class="form-group">
@@ -24,7 +27,7 @@
             <div class="form-group">
                 <label for="Diary_pass2" class="control-label">鍵の確認</label>
                 <input id="Diary_pass2" type="password" required onchange="confirmPass2()" autocomplete="new-password" class="form-control" placeholder="鍵をもう一度入力してください" />
-                <span id="pass_alarm2" class="text-danger"></span>
+                <span id="pass2_alarm" class="text-danger"></span>
             </div>
             <!-- ノート -->
             <div class="form-group">

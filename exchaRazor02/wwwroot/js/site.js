@@ -10,7 +10,7 @@ function encodeHTMLForm(data) {
 	//データ形式を変換する
 	//例、param1=abc&param2=100
 	for (let name in data) {
-		//URIエンコードして、'='で繋げる。
+		//URI形式にエンコードして、'='で繋げる。
 		let value = data[name];
 		let param = encodeURIComponent(name) + '=' + encodeURIComponent(value);
 		params.push(param);

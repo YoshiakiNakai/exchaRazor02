@@ -46,7 +46,7 @@ namespace exchaRazor02
 
 			//Razor‚ÌŽg—p
 			services.AddRazorPages();
-			//services.AddControllers();	//Add‚µ‚È‚¢‚Å‚àController‚Í“®‚­
+			services.AddControllers();	//Add‚µ‚È‚¢‚Å‚àController‚Í“®‚­
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
