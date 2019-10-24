@@ -1,0 +1,60 @@
+﻿@page
+@model exchaRazor02.Pages.Leaves.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Leaf[0].title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leaf[0].contents)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leaf[0].exid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leaf[0].comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leaf[0].diary)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Leaf) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.contents)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.exid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.diary.Id)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

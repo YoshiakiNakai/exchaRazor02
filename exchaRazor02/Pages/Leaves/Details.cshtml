@@ -1,0 +1,49 @@
+﻿@page
+@model exchaRazor02.Pages.Leaves.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Leaf</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Leaf.title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Leaf.title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Leaf.contents)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Leaf.contents)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Leaf.exid)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Leaf.exid)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Leaf.comment)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Leaf.comment)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Leaf.diary)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Leaf.diary.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-page="./Index">Back to List</a>
+</div>

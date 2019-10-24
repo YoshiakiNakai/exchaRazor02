@@ -73,10 +73,12 @@ namespace exchaRazor02
 
 			app.UseAuthorization();
 
+			app.UseStatusCodePagesWithRedirects("/Error?code={0}");	//{0}にステータスコードが入る
+
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapRazorPages();
-				endpoints.MapControllerRoute("default", "{controller}/{action}/{id?}");	//Controllerへroutingする
+				endpoints.MapControllerRoute("default", "{controller}/{action}/{id?}"); //Controllerへroutingする
 			});
 		}
 	}
