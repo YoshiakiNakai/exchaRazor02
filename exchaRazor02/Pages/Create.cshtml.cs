@@ -56,11 +56,11 @@ namespace exchaRazor02.Pages
 			this.Diary.exid = null;
 
 			//DBへ保存する
+			_context.diaries.Add(Diary);
 			try {
-				_context.diaries.Add(Diary);
 				await _context.SaveChangesAsync();
 			} catch (DbUpdateException ex) {
-				_logger.Log(LogLevel.Error, ex.Message);
+				//_logger.Log(LogLevel.Error, ex.Message);
 				//id重複確認
 				if (_context.diaries.Any(e => e.Id == Diary.Id)) {
 					this.message = "エラー：既に使用されているIDです";
@@ -68,9 +68,6 @@ namespace exchaRazor02.Pages
 				} else {
 					throw;
 				}
-			} catch (Exception ex) {
-				_logger.Log(LogLevel.Error, ex.Message);
-				return RedirectToPage("/Error");
 			}
 			return RedirectToPage("/Account/Login");
         }

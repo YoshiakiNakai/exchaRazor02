@@ -1,0 +1,41 @@
+﻿@page
+@model exchaRazor02.Pages.SettingsModel
+@using exchaRazor02.Data;
+
+@{
+    ViewData["Title"] = "日記の設定";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!-- ノート -->
+            <div class="form-group">
+                <label asp-for="form.note" class="control-label"></label>
+                <textarea asp-for="form.note" class="form-control" placeholder="日記の紹介などご自由にどうぞ" rows="2"></textarea>
+                <span asp-validation-for="form.note" class="text-danger"></span>
+            </div>
+            <!-- 公開非公開 -->
+            <div class="form-group">
+                <input asp-for="form.pub" type="radio" value="@PUBLICITY.pub">
+                <label for="form_pub" style="color:black">公開　</label>
+                <input asp-for="form.pub" type="radio" value="@PUBLICITY.pri">
+                <label for="form_pri" style="color:black">非公開　</label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="変更" class="mybtn" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

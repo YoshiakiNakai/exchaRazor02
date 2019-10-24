@@ -18,6 +18,7 @@ namespace exchaRazor02.Pages
     {
         public void OnGet()
         {
+			//HttpContext.User.Identity.IsAuthenticated
 			//var a = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 		}
 	}
