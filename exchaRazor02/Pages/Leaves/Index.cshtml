@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{code?}"
 @model exchaRazor02.Pages.Leaves.IndexModel
 
 @{
@@ -13,42 +13,21 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.leaves[0].title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.leaves[0].contents)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.leaves[0].exid)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.leaves[0].comment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.leaves[0].diary)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.leaves[0].title)</th>
+            <th>@Html.DisplayNameFor(model => model.leaves[0].contents)</th>
+            <th>@Html.DisplayNameFor(model => model.leaves[0].time)</th>
+            <th>@Html.DisplayNameFor(model => model.leaves[0].exid)</th>
+            <th>@Html.DisplayNameFor(model => model.leaves[0].comment)</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.leaves) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.contents)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.exid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.comment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.diary.Id)
-            </td>
+            <td>@Html.DisplayFor(modelItem => item.title)</td>
+            <td>@Html.DisplayFor(modelItem => item.contents)</td>
+            <td>@Html.DisplayFor(modelItem => item.exid)</td>
+            <td>@Html.DisplayFor(modelItem => item.time)</td>
+            <td>@Html.DisplayFor(modelItem => item.comment)</td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |

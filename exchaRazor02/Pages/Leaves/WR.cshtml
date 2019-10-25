@@ -1,0 +1,51 @@
+﻿@page
+@model exchaRazor02.Pages.Leaves.WRModel
+
+@{
+    ViewData["Title"] = "WR";
+}
+
+<h1>WR</h1>
+
+<h4>leaf</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="leaf.diaryId" />
+            <input type="hidden" asp-for="leaf.time" />
+            <div class="form-group">
+                <label asp-for="leaf.title" class="control-label"></label>
+                <input asp-for="leaf.title" class="form-control" />
+                <span asp-validation-for="leaf.title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="leaf.contents" class="control-label"></label>
+                <input asp-for="leaf.contents" class="form-control" />
+                <span asp-validation-for="leaf.contents" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="leaf.exid" class="control-label"></label>
+                <input asp-for="leaf.exid" class="form-control" />
+                <span asp-validation-for="leaf.exid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="leaf.comment" class="control-label"></label>
+                <input asp-for="leaf.comment" class="form-control" />
+                <span asp-validation-for="leaf.comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
