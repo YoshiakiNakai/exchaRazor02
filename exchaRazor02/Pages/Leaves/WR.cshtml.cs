@@ -88,6 +88,20 @@ namespace exchaRazor02.Pages.Leaves
 			commentFlag = await DiaryAuth.authCommentLeaf(user, _context, leaf);   //コメント権限を取得
 
 			//●権限に従って、leafを作成、更新する
+			//作成か
+			if (createFlag) {
+				//作成のとき
+
+			}//コメントか
+			else if (commentFlag) {
+				//コメントのとき
+
+			} else {
+				//変更権限なしのとき
+				return StatusCode(403);
+			}
+
+
 
 			//_context.Attach(leaf).State = EntityState.Modified;
 
