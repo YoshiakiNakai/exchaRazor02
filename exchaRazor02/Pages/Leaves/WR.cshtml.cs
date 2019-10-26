@@ -35,10 +35,13 @@ namespace exchaRazor02.Pages.Leaves
 		public bool message { get; set; }
 
 		[TempData]
-		public bool commentFlag { get; set; }	//コメント権限ありなし
+		public bool commentFlag { get; set; }   //コメント権限ありなし
 
 		[TempData]
-		public bool createFlag { get; set; }	//作成権限ありなし
+		public bool createFlag { get; set; }  //作成権限ありなし
+
+		[TempData]
+		public bool editFlag { get; set; }	//編集権限ありなし
 
 
 		//leafを表示する
@@ -55,23 +58,22 @@ namespace exchaRazor02.Pages.Leaves
 			if (diary == null) return StatusCode(404);
 			//日記が存在するとき
 
-			//閲覧権限があるか
-			if (DiaryAuth.authRead(user, diary)) return StatusCode(403);
+			//閲覧権限の確認
+			if (!DiaryAuth.authRead(user, diary)) return StatusCode(403);
 			//閲覧権限があるとき、ページを表示する
 
 			//バインドデータの設定
 			dispId = id;
-			leaf = await _context.leaves
-				.Where(l => l.diaryId == id)
-				.FirstOrDefaultAsync(l => l.time == time);
-			createFlag = DiaryAuth.authCreateLeaf(user, diary);		//作成権限を取得
-			commentFlag = await DiaryAuth.authCommentLeaf(user, _context, leaf);   //コメント権限を取得
-
-			//●表示内容、要確認
-            if (leaf == null) {
-                return Page();
-            }
-			ViewData["diaryId"] = new SelectList(_context.diaries, "Id", "Id");
+			leaf = _context.leaves.Where(l => (l.diaryId == id && l.time == time)).FirstOrDefault();
+			if(leaf == null) {
+				createFlag = DiaryAuth.authCreateLeaf(user, diary);     //作成権限を取得
+				editFlag = false;
+				commentFlag = false;
+			} else {
+				createFlag = false;
+				editFlag = await DiaryAuth.authEditLeaf(user, _context, leaf);   //編集権限を取得
+				commentFlag = await DiaryAuth.authCommentLeaf(user, _context, leaf);   //コメント権限を取得
+			}
             return Page();
         }
 
@@ -84,49 +86,49 @@ namespace exchaRazor02.Pages.Leaves
 			ClaimsPrincipal user = HttpContext.User;
 			Diary diary = await _context.diaries.FindAsync(dispId);
 			if (diary == null) return StatusCode(404);
-			createFlag = DiaryAuth.authCreateLeaf(user, diary);     //作成権限を取得
-			commentFlag = await DiaryAuth.authCommentLeaf(user, _context, leaf);   //コメント権限を取得
+			Leaf dbLeaf = _context.leaves.Where(l => (l.diaryId == leaf.diaryId && l.time == leaf.time)).FirstOrDefault();
+			if (dbLeaf == null) {
+				createFlag = DiaryAuth.authCreateLeaf(user, diary);     //作成権限を取得
+				editFlag = false;
+				commentFlag = false;
+			} else {
+				createFlag = false;
+				editFlag = await DiaryAuth.authEditLeaf(user, _context, dbLeaf);   //編集権限を取得
+				commentFlag = await DiaryAuth.authCommentLeaf(user, _context, dbLeaf);   //コメント権限を取得
+			}
 
-			//●権限に従って、leafを作成、更新する
+			//権限に従い、leafの処理を行う
 			//作成か
 			if (createFlag) {
 				//作成のとき
-
+				leaf.diaryId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
+				leaf.time = DateTime.Now;
+				leaf.exid = null;
+				leaf.contents = null;
+				_context.leaves.Add(leaf);
 			}//コメントか
 			else if (commentFlag) {
 				//コメントのとき
-
-			} else {
+				dbLeaf.exid = user.FindFirst(ClaimTypes.NameIdentifier).Value;
+				dbLeaf.comment = leaf.comment;
+				_context.Attach(leaf).State = EntityState.Modified;
+			}//編集か
+			else if(editFlag) {
+				//編集のとき
+				dbLeaf.time = DateTime.Now;
+				dbLeaf.title = leaf.title;
+				dbLeaf.contents = leaf.contents;
+				_context.Attach(leaf).State = EntityState.Modified;
+			}
+			else {
 				//変更権限なしのとき
 				return StatusCode(403);
 			}
 
+			await _context.SaveChangesAsync();
+			//catch (DbUpdateConcurrencyException) {/* 存在しないときのエラー */}
 
-
-			//_context.Attach(leaf).State = EntityState.Modified;
-
-			try
-			{
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LeafExists(leaf.diaryId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool LeafExists(string id)
-        {
-            return _context.leaves.Any(e => e.diaryId == id);
+            return Page();
         }
     }
 }

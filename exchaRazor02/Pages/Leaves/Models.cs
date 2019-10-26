@@ -71,21 +71,50 @@ namespace exchaRazor02.Pages.Leaves
 			//Leafを作成する権限があるか、確認する
 			// 交換中でない、かつ、持ち主、かつ、作成許可フラグON、ならば可能
 
-			//作成フラグOFFか
-			if (diary.excha == EXCHA.able) {
-				//OFFのとき、不可能
-			}//作成可能なとき
 			//未ログインか
-			else if (!user.Identity.IsAuthenticated) {
+			if (!user.Identity.IsAuthenticated) {
 				//未ログインのとき、不可能
 			}//ログイン中のとき
-			 //交換相手がいるか
-			else if (diary.exid != null) {
-				//交換中のとき、不可能
-			}//交換中でないとき
-			//持ち主か
-			else if (diary.Id == user.FindFirst(ClaimTypes.NameIdentifier).Value) {
-				//持ち主のとき、可能
+			else if (
+				(diary.Id == user.FindFirst(ClaimTypes.NameIdentifier).Value)	//日記の持ち主
+				&& (diary.writa == WRITA.able)	//作成可能
+				&& (diary.exid == null)	//交換相手なし
+				) {
+				flag = true;
+			}
+
+			return flag;
+		}
+
+		//Leafを編集する権限があるか
+		//引数１：アクセスユーザ
+		//引数２：日記
+		//戻り値：true 編集可能、false 不可能
+		public static async Task<bool> authEditLeaf(ClaimsPrincipal user, ExchaDContext5 context, Leaf leaf)
+		{
+			bool flag = false;  //戻り値：編集可不可フラグ
+
+			Diary diary = await context.diaries.FindAsync(leaf.diaryId);    //日記を取得
+			if (diary == null) return false;    //日記がないとき、不可能
+
+			//最新のleafの日時を取得する
+			DateTime latest = await context.leaves
+				.Where(l => l.diaryId == leaf.diaryId)
+				.MaxAsync(l => l.time);
+
+			//Leafを編集する権限があるか、確認する
+			// 持ち主、かつ、交換中でない、かつ、最新leaf、かつ、コメント者なし、ならば可能
+
+			//未ログインか
+			if (!user.Identity.IsAuthenticated) {
+				//未ログインのとき、不可能
+			}//ログイン中のとき
+			else if (
+				(diary.Id == user.FindFirst(ClaimTypes.NameIdentifier).Value)   //日記の持ち主
+				&& (leaf.time == latest)    //最新leaf
+				&& (diary.exid == null)		//交換相手なし
+				&& (leaf.exid == null)		//コメント者なし
+				) {
 				flag = true;
 			}
 
@@ -104,25 +133,21 @@ namespace exchaRazor02.Pages.Leaves
 			Diary diary = await context.diaries.FindAsync(leaf.diaryId);	//日記を取得
 			if (diary == null) return false;    //日記がないとき、不可能
 
-			//Leafへコメントする権限があるか、確認する
-			//交換相手のとき、かつ、最新のLeaf、ならば可能
-
 			//最新のleafの日時を取得する
 			DateTime latest = await context.leaves
 				.Where(l => l.diaryId == leaf.diaryId)
 				.MaxAsync(l => l.time);
 
-			//古いLeafか
-			if(leaf.time != latest) {
-				//古いとき、不可能
-			}//最新のLeafのとき
-			//未ログインか
-			else if (!user.Identity.IsAuthenticated) {
+			//Leafへコメントする権限があるか、確認する
+			//交換相手のとき、かつ、最新のLeaf、ならば可能
+
+			if (!user.Identity.IsAuthenticated) {
 				//未ログインのとき、不可能
 			}//ログイン中のとき
-			 //交換相手か
-			else if (user.FindFirst(ClaimTypes.NameIdentifier).Value == diary.exid) {
-				//交換相手のとき
+			else if (
+				(user.FindFirst(ClaimTypes.NameIdentifier).Value == diary.exid) //交換相手
+				&& (leaf.time == latest)	//最新leaf
+				) {
 				flag = true;
 			}
 

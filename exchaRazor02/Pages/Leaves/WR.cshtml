@@ -15,29 +15,68 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="leaf.diaryId" />
             <input type="hidden" asp-for="leaf.time" />
-            <div class="form-group">
-                <label asp-for="leaf.title" class="control-label"></label>
-                <input asp-for="leaf.title" class="form-control" />
-                <span asp-validation-for="leaf.title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="leaf.contents" class="control-label"></label>
-                <input asp-for="leaf.contents" class="form-control" />
-                <span asp-validation-for="leaf.contents" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="leaf.exid" class="control-label"></label>
-                <input asp-for="leaf.exid" class="form-control" />
-                <span asp-validation-for="leaf.exid" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="leaf.comment" class="control-label"></label>
-                <input asp-for="leaf.comment" class="form-control" />
-                <span asp-validation-for="leaf.comment" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+            @{
+                string titleTag;
+                string contentsTag;
+                string commentTag;
+                if (Model.createFlag)
+                {
+                    <div class="form-group">
+                        <label asp-for="leaf.title" class="control-label"></label>
+                        <input asp-for="leaf.title" class="form-control" />
+                        <span asp-validation-for="leaf.title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="leaf.contents" class="control-label"></label>
+                        <textarea asp-for="leaf.contents" class="form-control" placeholder="" rows="6"></textarea>
+                        <span asp-validation-for="leaf.contents" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="leaf.comment" class="control-label"></label>
+                        <input asp-for="leaf.comment" class="form-control" readonly />
+                        <span asp-validation-for="leaf.comment" class="text-danger"></span>
+                    </div>
+                }
+                else if (Model.editFlag)
+                {
+                    <div class="form-group">
+                        <label asp-for="leaf.title" class="control-label"></label>
+                        <input asp-for="leaf.title" class="form-control" />
+                        <span asp-validation-for="leaf.title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="leaf.contents" class="control-label"></label>
+                        <textarea asp-for="leaf.contents" class="form-control" placeholder="" rows="6"></textarea>
+                        <span asp-validation-for="leaf.contents" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="leaf.comment" class="control-label"></label>
+                        <input asp-for="leaf.comment" class="form-control" readonly />
+                        <span asp-validation-for="leaf.comment" class="text-danger"></span>
+                    </div>
+                }
+                else if (Model.commentFlag)
+                {
+                    <div class="form-group">
+                        <label asp-for="leaf.title" class="control-label"></label>
+                        <p asp-for="leaf.title" class="form-control"></p>
+                        <span asp-validation-for="leaf.title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="leaf.contents" class="control-label"></label>
+                        <p asp-for="leaf.contents" class="form-control"></p>
+                        <span asp-validation-for="leaf.contents" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="leaf.comment" class="control-label"></label>
+                        <textarea asp-for="leaf.comment" class="form-control" placeholder="" rows="6" />
+                        <span asp-validation-for="leaf.comment" class="text-danger"></span>
+                    </div>
+                }
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            }
         </form>
     </div>
 </div>

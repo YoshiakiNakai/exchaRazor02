@@ -32,7 +32,7 @@ namespace exchaRazor02.Pages.Leaves
 			if (diary == null) return StatusCode(404);
 			//日記が存在するとき
 
-			//閲覧権限があるか
+			//閲覧権限の確認
 			if (!DiaryAuth.authRead(user, diary)) return StatusCode(403);
 			//閲覧権限があるとき
 			//内容を表示する

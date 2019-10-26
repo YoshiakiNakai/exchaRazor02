@@ -46,6 +46,7 @@ namespace exchaRazor02.Data
 			this.exid = exid;
 		}
 
+		[Key]
 		[Required]
 		[MaxLength(255)]
 		[Display(Name = "日記ID")]
@@ -80,10 +81,6 @@ namespace exchaRazor02.Data
 	//日記の１ページ１ページ
 	public class Leaf
 	{
-		const int maxTitle = 255;
-		const int maxContents = 65535;
-		const int maxComment = 65535;
-
 		//コンストラクタ
 		public Leaf(){}
 		public Leaf(string diaryId, DateTime time, string title, string contents, string exid, string comment)
@@ -98,12 +95,19 @@ namespace exchaRazor02.Data
 
 		public string diaryId { get; set; }
 		public DateTime time { get; set; }
-		[MaxLength(maxTitle)]
+
+		[MinLength(1)]
+		[MaxLength(255)]
+		[Display(Name = "タイトル")]
 		public string title { get; set; }
-		[MaxLength(maxContents)]
+
+		[MinLength(1)]
+		[MaxLength(65535)]
+		[Display(Name = "内容")]
 		public string contents { get; set; }
 		public string exid { get; set; }
-		[MaxLength(maxComment)]
+		[MaxLength(65535)]
+		[Display(Name = "コメント")]
 		public string comment { get; set; }
 
 		//Navigation Property

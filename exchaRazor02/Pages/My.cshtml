@@ -3,12 +3,12 @@
 @model exchaRazor02.Pages.MyModel
 @{
     ViewData["Title"] = "マイページ";
-    string id = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+    string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 }
 
-<h1>@ViewData["Title"]　<text class="sm">：@(id)</text></h1>
+<h1>@ViewData["Title"]　<text class="sm">：@(userId)</text></h1>
 
-<a href="/Leaves/Index?id=@(id)" class="h5 lineLink">日記を開く</a>
+<a href="/Leaves/Index?id=@(userId)" class="h5 lineLink">日記を開く</a>
 
 <br />
 <a href="/Diaries" class="h5 lineLink">交換相手を探す</a>
