@@ -47,7 +47,7 @@ namespace exchaRazor02.Pages.Account
 			public string pass { get; set; }
 		}
 
-		[TempData]
+		//[TempData]
 		public string message { get; set; }
 
 
