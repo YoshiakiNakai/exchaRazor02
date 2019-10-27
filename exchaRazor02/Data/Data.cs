@@ -119,24 +119,27 @@ namespace exchaRazor02.Data
 	public enum EXCHA_ACCEPT
 	{
 		accept, //承諾
-		refuze,	//拒否
+		reject,	//拒否
+		yet,	//未
 	}
 	//交換申し込みの記録
 	public class Appli
 	{
 		//コンストラクタ
 		public Appli() { }
-		public Appli(string diaryId, DateTime leafTime, string apid, EXCHA_ACCEPT accept )
+		public Appli(string diaryId, DateTime leafTime, string apid, EXCHA_ACCEPT accept, double period)
 		{
 			this.diaryId = diaryId;
 			this.leafTime = leafTime;
 			this.apid = apid;
 			this.accept = accept;
+			this.period = period;
 		}
 		public string diaryId { get; set; }
 		public DateTime leafTime { get; set; }
 		public string apid { get; set; }
 		public EXCHA_ACCEPT accept { get; set; }
+		public double period { get; set; }
 
 		//Navigation Property
 		public Leaf leaf { get; set; }         //Leafに、制約される。

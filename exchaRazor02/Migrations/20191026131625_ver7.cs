@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace exchaRazor02.Migrations
 {
-    public partial class s : Migration
+    public partial class ver7 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,7 +55,8 @@ namespace exchaRazor02.Migrations
                     diaryId = table.Column<string>(nullable: false),
                     leafTime = table.Column<DateTime>(nullable: false),
                     apid = table.Column<string>(nullable: true),
-                    accept = table.Column<int>(nullable: false)
+                    accept = table.Column<int>(nullable: false),
+                    period = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {

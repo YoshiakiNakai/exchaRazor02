@@ -11,9 +11,9 @@ namespace exchaRazor02.Pages
 {
     public class DiariesModel : PageModel
     {
-        private readonly exchaRazor02.Data.ExchaDContext5 _context;
+        private readonly exchaRazor02.Data.ExchaDContext7 _context;
 
-        public DiariesModel(exchaRazor02.Data.ExchaDContext5 context)
+        public DiariesModel(exchaRazor02.Data.ExchaDContext7 context)
         {
             _context = context;
         }

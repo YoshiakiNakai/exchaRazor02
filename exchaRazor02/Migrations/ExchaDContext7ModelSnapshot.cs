@@ -8,8 +8,8 @@ using exchaRazor02.Data;
 
 namespace exchaRazor02.Migrations
 {
-    [DbContext(typeof(ExchaDContext5))]
-    partial class ExchaDContext5ModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ExchaDContext7))]
+    partial class ExchaDContext7ModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,9 @@ namespace exchaRazor02.Migrations
 
                     b.Property<string>("apid")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("period")
+                        .HasColumnType("float");
 
                     b.HasKey("diaryId", "leafTime");
 

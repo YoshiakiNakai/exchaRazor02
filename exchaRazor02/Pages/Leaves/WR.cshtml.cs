@@ -12,15 +12,15 @@ using exchaRazor02.Data;
 
 namespace exchaRazor02.Pages.Leaves
 {
-	//責務：
-	// 閲覧
-	// 新規作成
-	// コメント
+	//役割：
+	// leaf閲覧
+	// leaf新規作成
+	// leafコメント
 	public class WRModel : PageModel
     {
-        private readonly exchaRazor02.Data.ExchaDContext5 _context;
+        private readonly exchaRazor02.Data.ExchaDContext7 _context;
 
-        public WRModel(exchaRazor02.Data.ExchaDContext5 context)
+        public WRModel(exchaRazor02.Data.ExchaDContext7 context)
         {
             _context = context;
         }

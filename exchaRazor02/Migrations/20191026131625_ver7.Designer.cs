@@ -9,9 +9,9 @@ using exchaRazor02.Data;
 
 namespace exchaRazor02.Migrations
 {
-    [DbContext(typeof(ExchaDContext5))]
-    [Migration("20191023024046_s")]
-    partial class s
+    [DbContext(typeof(ExchaDContext7))]
+    [Migration("20191026131625_ver7")]
+    partial class ver7
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,6 +34,9 @@ namespace exchaRazor02.Migrations
 
                     b.Property<string>("apid")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("period")
+                        .HasColumnType("float");
 
                     b.HasKey("diaryId", "leafTime");
 

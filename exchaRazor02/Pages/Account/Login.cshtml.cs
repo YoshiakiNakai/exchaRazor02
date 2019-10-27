@@ -23,10 +23,10 @@ namespace exchaRazor02.Pages.Account
 	[AutoValidateAntiforgeryToken]
 	public class LoginModel : PageModel
     {
-		private readonly exchaRazor02.Data.ExchaDContext5 _context;
+		private readonly exchaRazor02.Data.ExchaDContext7 _context;
 
 		//コンストラクタ
-		public LoginModel(exchaRazor02.Data.ExchaDContext5 context)
+		public LoginModel(exchaRazor02.Data.ExchaDContext7 context)
 		{
 			_context = context;
 		}

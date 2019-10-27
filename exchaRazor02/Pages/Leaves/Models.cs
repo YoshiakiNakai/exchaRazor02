@@ -24,6 +24,8 @@ namespace exchaRazor02.Pages.Leaves
 		{
 			bool flag = false;  //戻り値：閲覧可不可フラグ
 
+			//●交換は、時間で確認する
+
 			//日記を閲覧権限があるか、確認する
 			//処理概要：
 			// 交換中、かつ、交換者：表示
@@ -90,7 +92,7 @@ namespace exchaRazor02.Pages.Leaves
 		//引数１：アクセスユーザ
 		//引数２：日記
 		//戻り値：true 編集可能、false 不可能
-		public static async Task<bool> authEditLeaf(ClaimsPrincipal user, ExchaDContext5 context, Leaf leaf)
+		public static async Task<bool> authEditLeaf(ClaimsPrincipal user, ExchaDContext7 context, Leaf leaf)
 		{
 			bool flag = false;  //戻り値：編集可不可フラグ
 
@@ -126,7 +128,7 @@ namespace exchaRazor02.Pages.Leaves
 		//引数２：DB
 		//引数３：コメントするleaf
 		//戻り値：true コメント可能、false 不可能
-		public static async Task<bool> authCommentLeaf(ClaimsPrincipal user, ExchaDContext5 context, Leaf leaf)
+		public static async Task<bool> authCommentLeaf(ClaimsPrincipal user, ExchaDContext7 context, Leaf leaf)
 		{
 			bool flag = false;  //戻り値：コメント可不可フラグ
 

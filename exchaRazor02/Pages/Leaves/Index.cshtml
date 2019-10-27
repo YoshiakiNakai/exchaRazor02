@@ -7,9 +7,6 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -29,9 +26,7 @@
             <td>@Html.DisplayFor(modelItem => item.time)</td>
             <td>@Html.DisplayFor(modelItem => item.comment)</td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a href="/Leaves/WR?id=@item.diaryId&@item.time">開く</a>
             </td>
         </tr>
 }

@@ -191,6 +191,9 @@ a.lineLink:hover::after {
     width: 100%;
 }
 
+table {
+    table-layout: fixed;    /* fixed:一行目の指定幅に合わせる */
+}
 /* table head要素 */
 table.mytbl.table.table-striped > thead > tr {
     background-color: #deb887;

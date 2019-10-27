@@ -42,7 +42,7 @@ namespace exchaRazor02
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
 			//DBの使用
-			services.AddDbContext<ExchaDContext5>(options => options.UseSqlServer(Configuration.GetConnectionString("ExchaDContext5")));
+			services.AddDbContext<ExchaDContext7>(options => options.UseSqlServer(Configuration.GetConnectionString("ExchaDContext7")));
 
 			//Razorの使用
 			services.AddRazorPages();

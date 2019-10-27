@@ -1,0 +1,41 @@
+﻿@page
+@model exchaRazor02.Pages.appliModel
+
+@{
+    if (Model.appli == null)
+    {
+
+    }
+    else
+    {
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.appli[0].apid)</th>
+                    <th>@Html.DisplayNameFor(model => model.appli[0].accept)</th>
+                    <th>@Html.DisplayNameFor(model => model.appli[0].period)</th>
+                    <th>@Html.DisplayNameFor(model => model.appli[0].leaf)</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.appli)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.apid)</td>
+                        <td>@Html.DisplayFor(modelItem => item.accept)</td>
+                        <td>@Html.DisplayFor(modelItem => item.period)</td>
+                        <td>@Html.DisplayFor(modelItem => item.leaf.diaryId)</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+}
