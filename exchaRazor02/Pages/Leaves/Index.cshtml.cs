@@ -21,10 +21,13 @@ namespace exchaRazor02.Pages.Leaves
         }
 
         public IList<Leaf> leaves { get; set; }
+		public bool exchaFlag { get; set; }  //交換申請可能か
+		public bool createFlag { get; set; }  //作成権限ありなし
+		public bool commentFlag { get; set; }   //コメント権限ありなし
 
 		//指定したidの日記の目次を表示する
 		public async Task<IActionResult> OnGetAsync(string id)
-        {
+		{
 			ClaimsPrincipal user = HttpContext.User;
 
 			//日記の情報を取得する
@@ -37,7 +40,18 @@ namespace exchaRazor02.Pages.Leaves
 			//閲覧権限があるとき
 			//内容を表示する
 			leaves = await _context.leaves.Where(l => l.diaryId == id).ToListAsync();
+			if (user.Identity.IsAuthenticated) {
+				string authId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
+				//ログイン中のとき
+				exchaFlag = await DiaryAuth.authExcha(user, _context, diary);
+				createFlag = DiaryAuth.authCreateLeaf(user, diary);
+				commentFlag = (
+					(diary.exid == authId)
+					&& (diary.retTime > DateTime.Now)
+					);
+			}
 			return Page();
 		}
+
 	}
 }

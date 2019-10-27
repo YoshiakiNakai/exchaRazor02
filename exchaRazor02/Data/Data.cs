@@ -94,6 +94,7 @@ namespace exchaRazor02.Data
 		}
 
 		public string diaryId { get; set; }
+		[Display(Name = "日付")]
 		public DateTime time { get; set; }
 
 		[MinLength(1)]
@@ -105,6 +106,7 @@ namespace exchaRazor02.Data
 		[MaxLength(65535)]
 		[Display(Name = "内容")]
 		public string contents { get; set; }
+		[Display(Name = "交換相手")]
 		public string exid { get; set; }
 		[MaxLength(65535)]
 		[Display(Name = "コメント")]

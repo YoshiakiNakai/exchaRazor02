@@ -1,13 +1,40 @@
-﻿@page "{code?}"
+﻿@page "{id?}"
+@using System.Security.Claims;
 @model exchaRazor02.Pages.Leaves.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "目次";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
+@{
+    //新しいページを作る
+    //交換申請する
+    //コメントする
+    //日記一覧へ
+    if (!HttpContext.User.Identity.IsAuthenticated) {
+        <a href="~/diaries" class="lineLink">別の日記を見る</a>
+    } else {
+        string authId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        if (Model.createFlag) {
+            //新しくページを作る
+            <a href="./WR?id=@authId" class="lineLink">新しいページを作る</a>
+        } else if(Model.exchaFlag) {
+            //交換申請
+            <a href="#" class="lineLink">交換申請する</a>
+        } else if (Model.commentFlag) {
+            //コメントする
+            <a href="./WR?id=@authId" class="lineLink">コメントする</a>
+        } else {
+            <a href="~/diaries" class="lineLink">別の日記を見る</a>
+        }
+    }
 
-<table class="table">
+}
+
+<hr />
+
+<table class="table table-striped table-hover mytbl">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.leaves[0].title)</th>
@@ -18,17 +45,18 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.leaves) {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.title)</td>
-            <td>@Html.DisplayFor(modelItem => item.contents)</td>
-            <td>@Html.DisplayFor(modelItem => item.exid)</td>
-            <td>@Html.DisplayFor(modelItem => item.time)</td>
-            <td>@Html.DisplayFor(modelItem => item.comment)</td>
-            <td>
-                <a href="/Leaves/WR?id=@item.diaryId&@item.time">開く</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.leaves)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.title)</td>
+                <td>@Html.DisplayFor(modelItem => item.contents)</td>
+                <td>@Html.DisplayFor(modelItem => item.exid)</td>
+                <td>@Html.DisplayFor(modelItem => item.time)</td>
+                <td>@Html.DisplayFor(modelItem => item.comment)</td>
+                <td>
+                    <a href="/Leaves/WR?id=@item.diaryId&@item.time">開く</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -24,8 +24,6 @@ namespace exchaRazor02.Pages.Leaves
 		{
 			bool flag = false;  //戻り値：閲覧可不可フラグ
 
-			//●交換は、時間で確認する
-
 			//日記を閲覧権限があるか、確認する
 			//処理概要：
 			// 交換中、かつ、交換者：表示
@@ -34,8 +32,8 @@ namespace exchaRazor02.Pages.Leaves
 			// 非公開、かつ、持ち主：表示
 			// 非公開：非表示
 
-			//交換相手がいるか
-			if (diary.exid != null) {
+			//交換中か
+			if (diary.retTime > DateTime.Now) {
 				//交換中のとき、交換相手にのみ表示する
 				//未ログインか
 				if (!user.Identity.IsAuthenticated) {
@@ -80,7 +78,7 @@ namespace exchaRazor02.Pages.Leaves
 			else if (
 				(diary.Id == user.FindFirst(ClaimTypes.NameIdentifier).Value)	//日記の持ち主
 				&& (diary.writa == WRITA.able)	//作成可能
-				&& (diary.exid == null)	//交換相手なし
+				&& (diary.retTime < DateTime.Now)	//返却済み
 				) {
 				flag = true;
 			}
@@ -88,9 +86,46 @@ namespace exchaRazor02.Pages.Leaves
 			return flag;
 		}
 
+		//交換する権限があるか
+		//引数１：アクセスユーザ
+		//引数２：対象日記
+		//戻り値：true 可能
+		public async static Task<bool> authExcha(ClaimsPrincipal user, ExchaDContext7 context, Diary diary)
+		{
+			bool flag = false;  //戻り値：可不可フラグ
+
+			//交換する権限があるか、確認する
+			// 自分でない、かつ、交換可能、かつ、未申請、ならば可能
+
+			//最新のleafの日時を取得する
+			DateTime latest = await context.leaves
+				.Where(l => l.diaryId == diary.Id)
+				.MaxAsync(l => l.time);
+			string authId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+			Diary my = await context.diaries.FindAsync(authId);
+
+			//未ログインか
+			if (!user.Identity.IsAuthenticated) {
+				//未ログインのとき、不可能
+			}//ログイン中のとき
+			//交換可能か
+			else if((my.excha == EXCHA.able)
+				&& (diary.Id != authId)) {
+				//未申請ならば可能
+				flag = !context.appli.Any(a => (
+						(a.diaryId == diary.Id)
+						&& (a.leafTime == latest))
+						&& (a.apid == authId));
+			}
+			return flag;
+		}
+
+
 		//Leafを編集する権限があるか
 		//引数１：アクセスユーザ
-		//引数２：日記
+		//引数２：DB
+		//引数３：編集するleaf
 		//戻り値：true 編集可能、false 不可能
 		public static async Task<bool> authEditLeaf(ClaimsPrincipal user, ExchaDContext7 context, Leaf leaf)
 		{
@@ -114,7 +149,7 @@ namespace exchaRazor02.Pages.Leaves
 			else if (
 				(diary.Id == user.FindFirst(ClaimTypes.NameIdentifier).Value)   //日記の持ち主
 				&& (leaf.time == latest)    //最新leaf
-				&& (diary.exid == null)		//交換相手なし
+				&& (diary.retTime < DateTime.Now)	//返却済み
 				&& (leaf.exid == null)		//コメント者なし
 				) {
 				flag = true;
@@ -152,7 +187,6 @@ namespace exchaRazor02.Pages.Leaves
 				) {
 				flag = true;
 			}
-
 			return flag;
 		}
 	}

@@ -2,13 +2,12 @@
 @model exchaRazor02.Pages.Leaves.WRModel
 
 @{
-    ViewData["Title"] = "WR";
+    //ViewData["Title"] = "";   //OnGet()で設定
 }
 
-<h1>WR</h1>
+<h1>@ViewData["Title"]</h1>
+<span class="text-danger">@Model.message</span>
 
-<h4>leaf</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
@@ -16,11 +15,13 @@
             <input type="hidden" asp-for="leaf.diaryId" />
             <input type="hidden" asp-for="leaf.time" />
             @{
-                string titleTag;
-                string contentsTag;
-                string commentTag;
+                //機能:
+                // 新規作成
+                // コメント
+                // 編集
+                // 閲覧
                 if (Model.createFlag)
-                {
+                {   //新規作成
                     <div class="form-group">
                         <label asp-for="leaf.title" class="control-label"></label>
                         <input asp-for="leaf.title" class="form-control" />
@@ -32,13 +33,11 @@
                         <span asp-validation-for="leaf.contents" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="leaf.comment" class="control-label"></label>
-                        <input asp-for="leaf.comment" class="form-control" readonly />
-                        <span asp-validation-for="leaf.comment" class="text-danger"></span>
+                        <input type="submit" value="ページを作成" class="mybtn" />
                     </div>
                 }
                 else if (Model.editFlag)
-                {
+                {   //編集
                     <div class="form-group">
                         <label asp-for="leaf.title" class="control-label"></label>
                         <input asp-for="leaf.title" class="form-control" />
@@ -50,39 +49,46 @@
                         <span asp-validation-for="leaf.contents" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="leaf.comment" class="control-label"></label>
-                        <input asp-for="leaf.comment" class="form-control" readonly />
-                        <span asp-validation-for="leaf.comment" class="text-danger"></span>
+                        <input type="submit" value="ページを編集" class="mybtn" />
                     </div>
                 }
                 else if (Model.commentFlag)
-                {
+                {   //コメント
                     <div class="form-group">
                         <label asp-for="leaf.title" class="control-label"></label>
-                        <p asp-for="leaf.title" class="form-control"></p>
-                        <span asp-validation-for="leaf.title" class="text-danger"></span>
+                        <p class="form-control">@Model.leaf.title</p>
                     </div>
                     <div class="form-group">
                         <label asp-for="leaf.contents" class="control-label"></label>
-                        <p asp-for="leaf.contents" class="form-control"></p>
-                        <span asp-validation-for="leaf.contents" class="text-danger"></span>
+                        <p class="form-control">@Model.leaf.contents</p>
                     </div>
                     <div class="form-group">
                         <label asp-for="leaf.comment" class="control-label"></label>
                         <textarea asp-for="leaf.comment" class="form-control" placeholder="" rows="6" />
                         <span asp-validation-for="leaf.comment" class="text-danger"></span>
                     </div>
+                    <div class="form-group">
+                        <input type="submit" value="ページへコメント" class="mybtn" />
+                    </div>
                 }
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                </div>
+                else
+                {   //閲覧
+                    <div class="form-group">
+                        <label asp-for="leaf.title" class="control-label"></label>
+                        <p class="form-control">@Model.leaf.title</p>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="leaf.contents" class="control-label"></label>
+                        <p class="form-control">@Model.leaf.contents</p>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="leaf.comment" class="control-label"></label>
+                        <p class="form-control">@Model.leaf.comment</p>
+                    </div>
+                }
             }
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {
