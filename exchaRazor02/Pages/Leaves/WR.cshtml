@@ -6,6 +6,7 @@
 }
 
 <h1>@ViewData["Title"]</h1>
+
 <span class="text-danger">@Model.message</span>
 
 <div class="row">
@@ -90,6 +91,8 @@
         </form>
     </div>
 </div>
+
+<hr /><a href="~/Leaves/Index?id=@Model.leaf.diaryId" class="nrmLink">戻る</a>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

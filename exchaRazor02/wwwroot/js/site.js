@@ -18,3 +18,34 @@ function encodeHTMLForm(data) {
 	//配列を'&'で結合する   //半角スペース%20を'+'に置き換える。
 	return params.join('&').replace(/%20/g, '+');
 }
+
+
+//交換申請
+function apply() {
+
+    var data = {
+        "diaryId": l('diaryId').value,
+        "period": l('exchaPeriod').value,
+        "token": "",
+    };
+
+	//XMLHttpRequestの設定
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", '/api/Appli/apply', true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+	//イベントハンドラの登録
+	xhr.onreadystatechange = function () { // 状態が変化すると関数が呼び出されます。
+        if (this.readyState === XMLHttpRequest.DONE) {
+			console.log("response: " + this.responseText);
+            if (this.responseText === "true") {
+                console.log("成功");
+            } else {
+                console.log("失敗");
+			}
+		}
+	}
+	//送信
+	console.log("send: " + encodeHTMLForm(data));
+	xhr.send(encodeHTMLForm(data));
+}

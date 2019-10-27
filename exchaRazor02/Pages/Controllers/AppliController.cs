@@ -15,24 +15,25 @@ namespace exchaRazor02.Pages.Controllers
 	// 交換申請
 	// 交換承諾
 	// 交換拒否
-	[AutoValidateAntiforgeryToken]
+	//[AutoValidateAntiforgeryToken]
 	[Route("api/[controller]")]
     [ApiController]
-	public class appliController : ControllerBase
+	public class AppliController : ControllerBase
     {
         private readonly ExchaDContext7 _context;
 
-        public appliController(ExchaDContext7 context)
+        public AppliController(ExchaDContext7 context)
         {
             _context = context;
         }
 
-        //POST: api/appli/{action}
+		//POST: api/Appli/{action}
 		//申請する
 		//引数１：申請先の日記ID
 		//引数２：交換期間
 		//戻り値：true 成功、false 申請済み
-        [HttpPost]
+		[HttpPost]
+		[Route("apply")]
         public async Task<bool> apply(string diaryId, double period)
         {
 			//最新のleafの日時を取得
@@ -59,7 +60,7 @@ namespace exchaRazor02.Pages.Controllers
         }
 
 
-		//POST: api/appli/{action}
+		//POST: api/Appli/{action}
 		//承諾する
 		//引数１：交換相手
 		//戻り値：true 成功
@@ -99,7 +100,7 @@ namespace exchaRazor02.Pages.Controllers
 			return true;
 		}
 
-		//POST: api/appli/{action}
+		//POST: api/Appli/{action}
 		//断る
 		//引数１：断る相手
 		//戻り値：true 成功

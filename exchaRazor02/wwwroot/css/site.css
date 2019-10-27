@@ -125,7 +125,7 @@ label.rowRight {
 
 
 /* ボタン形式のスタイル*/
-.mybtn {
+.mybtn, button.mybtn {
     position: relative;
     display: inline-block;
     padding: 0.25em 0.75em;
@@ -189,6 +189,11 @@ a.lineLink::after {
 }/* ホバー時、下線要素の幅を100%にする    */
 a.lineLink:hover::after {
     width: 100%;
+}
+
+/* リンク 通常 */
+a.nrmLink {
+    color: #e73; /* 文字の色 */
 }
 
 table {

@@ -54,7 +54,7 @@ namespace exchaRazor02.Pages.Leaves
 				//未ログインのとき、表示しない
 			}//ログイン中のとき
 			//持ち主ならば、表示する
-			if (diary.Id == user.FindFirst(ClaimTypes.NameIdentifier).Value){
+			else if (diary.Id == user.FindFirst(ClaimTypes.NameIdentifier).Value){
 				flag = true;
 			}
 			return flag;
@@ -92,6 +92,8 @@ namespace exchaRazor02.Pages.Leaves
 		//戻り値：true 可能
 		public async static Task<bool> authExcha(ClaimsPrincipal user, ExchaDContext7 context, Diary diary)
 		{
+			if (!user.Identity.IsAuthenticated) return false;
+
 			bool flag = false;  //戻り値：可不可フラグ
 
 			//交換する権限があるか、確認する
@@ -105,14 +107,10 @@ namespace exchaRazor02.Pages.Leaves
 
 			Diary my = await context.diaries.FindAsync(authId);
 
-			//未ログインか
-			if (!user.Identity.IsAuthenticated) {
-				//未ログインのとき、不可能
-			}//ログイン中のとき
 			//交換可能か
-			else if((my.excha == EXCHA.able)
+			if((my.excha == EXCHA.able)
 				&& (diary.Id != authId)) {
-				//未申請ならば可能
+				//未申請、かつ、自分でない、ならば可能
 				flag = !context.appli.Any(a => (
 						(a.diaryId == diary.Id)
 						&& (a.leafTime == latest))

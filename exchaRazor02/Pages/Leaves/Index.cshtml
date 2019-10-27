@@ -12,21 +12,32 @@
     //交換申請する
     //コメントする
     //日記一覧へ
-    if (!HttpContext.User.Identity.IsAuthenticated) {
-        <a href="~/diaries" class="lineLink">別の日記を見る</a>
-    } else {
+    if (!HttpContext.User.Identity.IsAuthenticated)
+    {
+        <a href="~/diaries" class="nrmLink">別の日記を見る</a>
+    }
+    else
+    {
         string authId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        if (Model.createFlag) {
-            //新しくページを作る
+        if (Model.createFlag)
+        {   //新しくページを作る
             <a href="./WR?id=@authId" class="lineLink">新しいページを作る</a>
-        } else if(Model.exchaFlag) {
-            //交換申請
-            <a href="#" class="lineLink">交換申請する</a>
-        } else if (Model.commentFlag) {
-            //コメントする
+        }
+        else if (Model.exchaFlag)
+        {   //交換申請
+            <button onclick="apply()" class="mybtn">交換申請する</button><br />
+            <text>交換期間：</text>
+            <input id="exchaPeriod" type="number" min="1" max="255" value="24" />
+            <text>hour</text>
+            <input id="diaryId" type="hidden" value="@Model.leaves[0].diaryId" />
+        }
+        else if (Model.commentFlag)
+        {   //コメントする
             <a href="./WR?id=@authId" class="lineLink">コメントする</a>
-        } else {
-            <a href="~/diaries" class="lineLink">別の日記を見る</a>
+        }
+        else
+        {
+            <a href="~/diaries" class="nrmLink">別の日記を見る</a>
         }
     }
 
