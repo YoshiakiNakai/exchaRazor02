@@ -145,8 +145,10 @@ namespace exchaRazor02.Data
 
 		[DataType(DataType.DateTime)]
 		public DateTime leafTime { get; set; }
+		[Display(Name = "日記ID")]
 		public string apid { get; set; }
 		public EXCHA_ACCEPT accept { get; set; }
+		[Display(Name = "交換期間")]
 		public double period { get; set; }
 
 		//Navigation Property

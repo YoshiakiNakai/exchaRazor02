@@ -34,6 +34,7 @@ body {
 /* p内では区切り文字がなくとも英字を改行させる */
 p {
     word-wrap: break-word;
+    display: block;
 }
 
 /* 見出しのサイズ調整    */
@@ -142,8 +143,10 @@ label.rowRight {
 }/* マウスクリック時    */
 .mybtn:active {
     background-color: #f83;
+}/* disabled */
+button.mybtn:disabled {
+    background-color: #666;
 }
-
 /* リンク ボタン型 */
 a.btnLink {
     position: relative;

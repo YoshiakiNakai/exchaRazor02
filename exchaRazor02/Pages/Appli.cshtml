@@ -9,14 +9,13 @@
     else
     {
 
-        <table class="table">
+        <table class="table table-striped table-hover mytbl">
             <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.appli[0].apid)</th>
                     <th>@Html.DisplayNameFor(model => model.appli[0].accept)</th>
                     <th>@Html.DisplayNameFor(model => model.appli[0].period)</th>
-                    <th>@Html.DisplayNameFor(model => model.appli[0].leaf)</th>
-                    <th></th>
+                    <th>link</th>
                 </tr>
             </thead>
             <tbody>
@@ -25,13 +24,8 @@
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.apid)</td>
                         <td>@Html.DisplayFor(modelItem => item.accept)</td>
-                        <td>@Html.DisplayFor(modelItem => item.period)</td>
-                        <td>@Html.DisplayFor(modelItem => item.leaf.diaryId)</td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.period) h</td>
+                        <td><a href="~/Leaves/Index?id=@item.apid" class="nrmLink">開く</a></td>
                     </tr>
                 }
             </tbody>

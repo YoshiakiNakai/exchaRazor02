@@ -152,7 +152,7 @@ namespace exchaRazor02.Pages.Leaves
 				//コメントのとき
 				dbLeaf.exid = user.FindFirst(ClaimTypes.NameIdentifier).Value;
 				dbLeaf.comment = leaf.comment;
-				_context.Attach(leaf).State = EntityState.Modified;
+				_context.Attach(dbLeaf).State = EntityState.Modified;
 				//日記フラグの変更
 				Diary your = await _context.diaries.FindAsync(user.FindFirst(ClaimTypes.NameIdentifier).Value);
 				your.writa = WRITA.able;
@@ -162,10 +162,9 @@ namespace exchaRazor02.Pages.Leaves
 			}//編集か
 			else if(editFlag) {
 				//編集のとき
-				dbLeaf.time = DateTime.Now;
 				dbLeaf.title = leaf.title;
 				dbLeaf.contents = leaf.contents;
-				_context.Attach(leaf).State = EntityState.Modified;
+				_context.Attach(dbLeaf).State = EntityState.Modified;
 			}
 			else {
 				//変更権限なしのとき

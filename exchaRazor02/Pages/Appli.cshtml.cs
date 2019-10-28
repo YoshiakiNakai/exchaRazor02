@@ -38,7 +38,8 @@ namespace exchaRazor02.Pages
 				.Where(a =>
 					(a.diaryId == authId)
 					&& (a.leafTime == latest)
-					&& (a.accept == EXCHA_ACCEPT.yet))
+					//&& (a.accept == EXCHA_ACCEPT.yet)
+					)
 				.ToListAsync();
 		}
 	}

@@ -27,7 +27,7 @@ namespace exchaRazor02.Data
 				.HasKey(o => new { o.diaryId, o.time });	//get, setをつけていないとここでバグる
 
 			modelBuilder.Entity<Appli>()
-				.HasKey(o => new { o.diaryId, o.leafTime });
+				.HasKey(o => new { o.diaryId, o.leafTime, o.apid });
 
 			//外部制約の定義
 			modelBuilder.Entity<Leaf>()	//制約される側

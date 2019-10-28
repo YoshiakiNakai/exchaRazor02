@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using exchaRazor02.Data;
 
 namespace exchaRazor02.Migrations
 {
     [DbContext(typeof(ExchaDContext8))]
-    partial class ExchaDContext8ModelSnapshot : ModelSnapshot
+    [Migration("20191028140658_ver8.2")]
+    partial class ver82
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

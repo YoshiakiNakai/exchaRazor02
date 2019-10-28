@@ -55,17 +55,11 @@
                 }
                 else if (Model.commentFlag)
                 {   //コメント
-                    <div class="form-group">
-                        <label asp-for="leaf.title" class="control-label"></label>
-                        <p class="form-control">@Model.leaf.title</p>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="leaf.contents" class="control-label"></label>
-                        <p class="form-control">@Model.leaf.contents</p>
-                    </div>
+                    <p class="h5"> @Model.leaf.title</p>
+                    <p>@Html.Raw(Html.Encode(Model.leaf.contents).Replace("&#xD;&#xA;", "<br>"))</p>
                     <div class="form-group">
                         <label asp-for="leaf.comment" class="control-label"></label>
-                        <textarea asp-for="leaf.comment" class="form-control" placeholder="" rows="6" />
+                        <textarea asp-for="leaf.comment" class="form-control" placeholder="" rows="6"></textarea>
                         <span asp-validation-for="leaf.comment" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -74,18 +68,11 @@
                 }
                 else
                 {   //閲覧
-                    <div class="form-group">
-                        <label asp-for="leaf.title" class="control-label"></label>
-                        <p class="form-control">@Model.leaf.title</p>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="leaf.contents" class="control-label"></label>
-                        <p class="form-control">@Model.leaf.contents</p>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="leaf.comment" class="control-label"></label>
-                        <p class="form-control">@Model.leaf.comment</p>
-                    </div>
+                    <p class="h5"> @Model.leaf.title</p>
+                    <!-- <p>@Html.Encode("\r\n")</p> -->
+                    <p>@Html.Raw(Html.Encode(Model.leaf.contents).Replace("&#xD;&#xA;", "<br>"))</p>
+                    <br />
+                    <p>@Html.Raw(Html.Encode(Model.leaf.comment).Replace("&#xD;&#xA;", "<br>"))</p>
                 }
             }
         </form>

@@ -113,17 +113,33 @@ namespace exchaRazor02.Pages.Leaves
 
 			Diary my = await context.diaries.FindAsync(authId);
 
-			//自分でない、かつ、両者交換可能、かつ、未申請、ならば申請可能
+			//自分でない、かつ、両者交換可能、かつ、未申請、かつ、両者交換中でない、ならば申請可能
 			//交換可能か
 			if ((my.excha == EXCHA.able)
+				&& (my.retTime < DateTime.Now)
 				&& (diary.excha == EXCHA.able)
-				&& (diary.Id != authId)) {
-				//申請しているか
-				flag = context.appli
-					.Any(a => (
+				&& (diary.Id != authId)
+				&& (diary.retTime < DateTime.Now)
+				) {
+				//未申請か
+				flag = !context.appli
+					.Any(a =>
 						(a.diaryId == diary.Id)
-						&& (a.leafTime == latest))
-						&& (a.apid == authId));
+						&& (a.leafTime == latest)
+						&& (a.apid == authId)
+						);
+				//flag = !context.appli
+				//	.Any(a =>
+				//		(a.diaryId == diary.Id)
+				//		);
+				//flag = !context.appli
+				//	.Any(a =>
+				//		(a.leafTime == latest)
+				//		);
+				//flag = !context.appli
+				//	.Any(a =>
+				//		(a.apid == authId)
+				//		);
 			}
 			return flag;
 		}

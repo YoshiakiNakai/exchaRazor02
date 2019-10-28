@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using exchaRazor02.Data;
 using PasswordHashing;
-
+using exchaRazor02.Pages.Leaves;
 
 namespace exchaRazor02.Pages.Controllers
 {
@@ -64,11 +64,14 @@ namespace exchaRazor02.Pages.Controllers
 
 			try {
 				await _context.SaveChangesAsync();
-			} catch (DbUpdateException) {
+			} catch (DbUpdateException ex) {
+
 				//申請済みか確認
 				if (_context.appli.Any(a => (
 						(a.diaryId == appli.diaryId)
-						&& a.leafTime == appli.leafTime))) {
+						&& (a.leafTime == appli.leafTime)
+						&& (a.apid == authId)
+						))) {
 					return false;	//Conflict();
 				} else {
 					throw;
@@ -79,12 +82,37 @@ namespace exchaRazor02.Pages.Controllers
 
 
 		//POST: api/Appli/{action}
-		//承諾する
-		//引数１：交換相手
+		//交換申請に対する返答
+		//引数１：承諾、拒否
+		//引数２：交換相手
 		//戻り値：true 成功
 		[HttpPost]
-		public async Task<bool> accept(string exid)
+		[Route("accept")]
+		public async Task<bool> reply(EXCHA_ACCEPT excha, string exid, string token)
 		{
+			//POSTデータを取得する
+			var form = HttpContext.Request.Form;
+			Microsoft.Extensions.Primitives.StringValues value;
+			form.TryGetValue("excha", out value);
+			if (value.ToString() == "accept") {
+				excha = EXCHA_ACCEPT.accept;
+			} else if(value.ToString() == "reject") {
+				excha = EXCHA_ACCEPT.reject;
+			}
+			form.TryGetValue("exid", out value);
+			exid = value.ToString();
+			form.TryGetValue("token", out value);
+			token = value.ToString();
+			if (!PBKDF2.Verify(HttpContext.User.FindFirst(ClaimTypes.Sid).Value, token)) return false;
+
+			//日記の情報を取得する
+			Diary diary = await _context.diaries.FindAsync(exid);
+			if (diary == null) return false;
+			//日記が存在するとき
+			//交換可能か
+			if (!await DiaryAuth.authExcha(HttpContext.User, _context, diary)) return false;
+			//交換可能なとき
+
 			//appliへ承諾を登録
 			//お互いの日記に交換相手を記録
 			//返却日時の記録
@@ -94,50 +122,28 @@ namespace exchaRazor02.Pages.Controllers
 			DateTime latest = await _context.leaves
 				.Where(l => l.diaryId == authId)
 				.MaxAsync(l => l.time);
-			Leaf leaf = new Leaf();
-			leaf.diaryId = authId;
-			leaf.time = latest;
-			leaf.exid = exid;
-			Appli appli = await _context.appli.FindAsync(leaf);
-			if (appli == null) return false;
-			appli.accept = EXCHA_ACCEPT.accept;
+			Appli appli = await _context.appli
+				.Where(a => 
+					(a.diaryId == authId)
+					&& (a.leafTime == latest)
+					&& (a.apid == exid)
+				)
+				.FirstOrDefaultAsync();
+			appli.accept = excha;
 			_context.Attach(appli).State = EntityState.Modified;
 
-			//お互いの日記に交換を記録
-			Diary my = await _context.diaries.FindAsync(authId);
-			Diary your = await _context.diaries.FindAsync(appli.apid);
-			my.exid = your.Id;
-			my.retTime = DateTime.Now.AddHours(appli.period);
-			your.exid = my.Id;
-			your.retTime = DateTime.Now.AddHours(appli.period);
-			_context.Attach(my).State = EntityState.Modified;
-			_context.Attach(your).State = EntityState.Modified;
-
-			await _context.SaveChangesAsync();
-
-			return true;
-		}
-
-		//POST: api/Appli/{action}
-		//断る
-		//引数１：断る相手
-		//戻り値：true 成功
-		[HttpPost]
-		public async Task<bool> reject(string exid)
-		{
-			//appliへ拒絶を登録
-			string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-			DateTime latest = await _context.leaves
-				.Where(l => l.diaryId == userId)
-				.MaxAsync(l => l.time);
-			Leaf leaf = new Leaf();
-			leaf.diaryId = userId;
-			leaf.time = latest;
-			leaf.exid = exid;
-			Appli appli = await _context.appli.FindAsync(leaf);
-			if (appli == null) return false;
-			appli.accept = EXCHA_ACCEPT.reject;
-			_context.Attach(appli).State = EntityState.Modified;
+			if(excha == EXCHA_ACCEPT.accept) {
+				//承諾のとき
+				//お互いの日記に交換を記録
+				Diary my = await _context.diaries.FindAsync(authId);
+				Diary your = await _context.diaries.FindAsync(appli.apid);
+				my.exid = your.Id;
+				my.retTime = DateTime.Now.AddHours(appli.period);
+				your.exid = my.Id;
+				your.retTime = DateTime.Now.AddHours(appli.period);
+				_context.Attach(my).State = EntityState.Modified;
+				_context.Attach(your).State = EntityState.Modified;
+			}
 
 			await _context.SaveChangesAsync();
 

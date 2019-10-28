@@ -23,32 +23,32 @@
         string authId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         if (Model.createFlag)
         {   //新しくページを作る
-            <a href="./WR?id=@authId" class="lineLink">新しいページを作る</a>
+            <a href="./WR?id=@authId&time=0" class="lineLink">新しいページを作る</a>
         }
         else if (Model.exchaFlag && Model.appliPeriod != null)
         {   //承諾拒否
-            <button onclick="accept()" class="mybtn">承諾する</button>
-            <button onclick="reject()" class="mybtn">拒否する</button>
+            <button onclick="reply(this)" class="mybtn" value="accept" >交換する</button>
+            <button onclick="reply(this)" class="mybtn" value="reject" >拒否する</button>
             <br />
             <text>交換期間：</text>
-            <input id="exchaPeriod" value="@Model.appliPeriod" readonly />
+            <input id="exchaPeriod" value="@Model.appliPeriod" readonly style="width: 4em;" />
             <text>hour</text>
             <input id="diaryId" type="hidden" value="@Model.leaves[0].diaryId" />
             <input id="token" type="hidden" value="@PBKDF2.Hash(HttpContext.User.FindFirst(ClaimTypes.Sid).Value, 8, 2)" />
         }
         else if (Model.exchaFlag)
         {   //交換申請
-            <button onclick="apply()" class="mybtn">交換申請する</button>
+            <button onclick="apply(this)" class="mybtn">交換申請する</button>
             <br />
             <text>交換期間：</text>
-            <input id="exchaPeriod" type="number" min="1" max="255" value="24" />
+            <input id="exchaPeriod" type="number" value="24" min="1" max="255" style="width: 4em;" />
             <text>hour</text>
             <input id="diaryId" type="hidden" value="@Model.leaves[0].diaryId" />
             <input id="token" type="hidden" value="@PBKDF2.Hash(HttpContext.User.FindFirst(ClaimTypes.Sid).Value, 8, 2)" />
         }
         else if (Model.commentFlag)
         {   //コメントする
-            <a href="./WR?id=@authId" class="lineLink">コメントする</a>
+            <a href="./WR?id=@Model.leaves[0].diaryId&time=@Model.leaves.Max(l => l.time)" class="lineLink">コメントする</a>
         }
         else
         {
