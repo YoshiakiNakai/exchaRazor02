@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 using System.Security.Claims;
 using exchaRazor02.Data;
@@ -18,11 +19,13 @@ namespace exchaRazor02.Pages.Leaves
 	// leafコメント
 	public class WRModel : PageModel
     {
-        private readonly exchaRazor02.Data.ExchaDContext7 _context;
+		private readonly ILogger<WRModel> _logger;
+		private readonly exchaRazor02.Data.ExchaDContext8 _context;
 
-        public WRModel(exchaRazor02.Data.ExchaDContext7 context)
+        public WRModel(exchaRazor02.Data.ExchaDContext8 context, ILogger<WRModel> logger)
         {
             _context = context;
+			_logger = logger;
         }
 
         [BindProperty]
@@ -37,7 +40,7 @@ namespace exchaRazor02.Pages.Leaves
 		//leafを表示する
 		//引数１：日記ID
 		//引数２：日時
-		public async Task<IActionResult> OnGetAsync(string id, DateTime time)
+		public async Task<IActionResult> OnGetAsync(string id, string time)
         {
             if (id == null || time == null) return NotFound();
 
@@ -53,8 +56,23 @@ namespace exchaRazor02.Pages.Leaves
 			//閲覧権限があるとき、ページを表示する
 
 			//バインドデータの設定
-			leaf = _context.leaves.Where(l => (l.diaryId == id && l.time == time)).FirstOrDefault();
-			if(leaf == null) {
+			//leaf = _context.leaves
+			//	.Where(l => 
+			//		(l.diaryId == id)
+			//		&& (l.time.ToString() == time)
+			//	).FirstOrDefault();
+			//
+			//DateTimeの条件をWhere()でうまく設定できないため、IListで検索する
+			IList<Leaf> Lleaves = _context.leaves.Where(l => l.diaryId == id).ToList();
+			for (int i = 0; i < Lleaves.Count(); i++)
+			{
+				if (Lleaves[i].time.ToString() == time) {
+					leaf = Lleaves[i];
+					break;
+				}
+			}
+
+			if (leaf == null) {
 				//leafが存在しないとき
 				//leafを作成
 				leaf = new Leaf();
@@ -93,7 +111,17 @@ namespace exchaRazor02.Pages.Leaves
 			ClaimsPrincipal user = HttpContext.User;
 			Diary objDiary = await _context.diaries.FindAsync(leaf.diaryId);
 			if (objDiary == null) return StatusCode(404);
-			Leaf dbLeaf = _context.leaves.Where(l => (l.diaryId == leaf.diaryId && l.time == leaf.time)).FirstOrDefault();
+			//Leaf dbLeaf = _context.leaves.Where(l => (l.diaryId == leaf.diaryId && l.time == leaf.time)).FirstOrDefault();
+			Leaf dbLeaf = null;
+			IList<Leaf> Lleaves = _context.leaves.Where(l => l.diaryId == leaf.diaryId).ToList();
+			for (int i = 0; i < Lleaves.Count(); i++)
+			{
+				if (Lleaves[i].time.ToString() == leaf.time.ToString()) {
+					dbLeaf = Lleaves[i];
+					break;
+				}
+			}
+
 			if (dbLeaf == null) {
 				createFlag = DiaryAuth.authCreateLeaf(user, objDiary);     //作成権限を取得
 				editFlag = false;

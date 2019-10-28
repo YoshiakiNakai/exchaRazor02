@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace exchaRazor02.Migrations
 {
-    public partial class ver7 : Migration
+    public partial class ver8 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

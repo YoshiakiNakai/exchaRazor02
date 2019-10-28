@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using exchaRazor02.Data;
+using PasswordHashing;
+
 
 namespace exchaRazor02.Pages.Controllers
 {
@@ -18,11 +21,12 @@ namespace exchaRazor02.Pages.Controllers
 	//[AutoValidateAntiforgeryToken]
 	[Route("api/[controller]")]
     [ApiController]
+	[Authorize]
 	public class AppliController : ControllerBase
     {
-        private readonly ExchaDContext7 _context;
+        private readonly ExchaDContext8 _context;
 
-        public AppliController(ExchaDContext7 context)
+        public AppliController(ExchaDContext8 context)
         {
             _context = context;
         }
@@ -34,14 +38,28 @@ namespace exchaRazor02.Pages.Controllers
 		//戻り値：true 成功、false 申請済み
 		[HttpPost]
 		[Route("apply")]
-        public async Task<bool> apply(string diaryId, double period)
+		//[ValidateAntiForgeryToken]
+        public async Task<bool> apply(string diaryId, double exchaPeriod, string token)
         {
+			//POSTデータを取得する
+			// 引数で受け取る方法がわからないので、HttpContextから取得する
+			var form = HttpContext.Request.Form;
+			Microsoft.Extensions.Primitives.StringValues value;
+			form.TryGetValue("diaryId", out value);
+			diaryId = value.ToString();
+			form.TryGetValue("exchaPeriod", out value);
+			exchaPeriod = double.Parse(value.ToString());
+			form.TryGetValue("token", out value);
+			token = value.ToString();
+			if (!PBKDF2.Verify(HttpContext.User.FindFirst(ClaimTypes.Sid).Value, token)) return false;
+			string authId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
 			//最新のleafの日時を取得
 			DateTime latest = await _context.leaves
 				.Where(l => l.diaryId == diaryId)
 				.MaxAsync(l => l.time);
 
-			Appli appli = new Appli(diaryId, latest, HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value, EXCHA_ACCEPT.yet, period);
+			Appli appli = new Appli(diaryId, latest, authId, EXCHA_ACCEPT.yet, exchaPeriod);
 			_context.appli.Add(appli);
 
 			try {
@@ -125,8 +143,5 @@ namespace exchaRazor02.Pages.Controllers
 
 			return true;
 		}
-
-
-
 	}
 }

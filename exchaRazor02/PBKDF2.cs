@@ -9,10 +9,9 @@ namespace PasswordHashing
 	public static class PBKDF2
 	{
 		private const int DerivedKeyLength = 64;
-
 		//ハッシュ化する
 		//戻り値：ハッシュ結果
-		public static PBKDF2Hash Hash(string password, int saltSize = 16, int iterations = 1000)
+		public static PBKDF2Hash Hash(string password, int saltSize = 16, int iterations = 999)
 		{
 			//ハッシュ化する
 			using (var rfc2898 = new Rfc2898DeriveBytes(password, saltSize: saltSize, iterations: iterations))

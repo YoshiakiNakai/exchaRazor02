@@ -62,6 +62,7 @@ namespace exchaRazor02.Data
 		public string note { get; set; }
 
 		[Display(Name = "最後の日付")]
+		[DataType(DataType.DateTime)]
 		public DateTime last { get; set; }	//最終ログイン
 
 		[Display(Name = "公開非公開")]
@@ -71,6 +72,7 @@ namespace exchaRazor02.Data
 		public WRITA writa { get; set; }    //記述可不可
 
 		[Display(Name = "返す日")]
+		[DataType(DataType.DateTime)]
 		public DateTime retTime { get; set; }	//
 		public string exid { get; set; }	//交換相手
 
@@ -95,6 +97,7 @@ namespace exchaRazor02.Data
 
 		public string diaryId { get; set; }
 		[Display(Name = "日付")]
+		[DataType(DataType.DateTime)]
 		public DateTime time { get; set; }
 
 		[MinLength(1)]
@@ -117,13 +120,14 @@ namespace exchaRazor02.Data
 		public List<Appli> appli { get; set; }   //appliは、制約される。
 	}
 
-	//交換の承諾結果
+	//交換の状況
 	public enum EXCHA_ACCEPT
 	{
 		accept, //承諾
-		reject,	//拒否
-		yet,	//未
+		reject, //拒否
+		yet,    //申請中
 	}
+	
 	//交換申し込みの記録
 	public class Appli
 	{
@@ -138,6 +142,8 @@ namespace exchaRazor02.Data
 			this.period = period;
 		}
 		public string diaryId { get; set; }
+
+		[DataType(DataType.DateTime)]
 		public DateTime leafTime { get; set; }
 		public string apid { get; set; }
 		public EXCHA_ACCEPT accept { get; set; }

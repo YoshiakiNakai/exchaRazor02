@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 namespace exchaRazor02.Data
 {
 	//DB定義
-	public class ExchaDContext7 : DbContext
+	public class ExchaDContext8 : DbContext
 	{
 		//コンストラクタ
-		public ExchaDContext7(DbContextOptions<ExchaDContext7> options)
+		public ExchaDContext8(DbContextOptions<ExchaDContext8> options)
 			: base(options)
 		{
 		}

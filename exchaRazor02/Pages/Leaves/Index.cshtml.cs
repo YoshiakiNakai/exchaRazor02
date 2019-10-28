@@ -13,15 +13,16 @@ namespace exchaRazor02.Pages.Leaves
 {
     public class IndexModel : PageModel
     {
-        private readonly exchaRazor02.Data.ExchaDContext7 _context;
+        private readonly exchaRazor02.Data.ExchaDContext8 _context;
 
-        public IndexModel(exchaRazor02.Data.ExchaDContext7 context)
+        public IndexModel(exchaRazor02.Data.ExchaDContext8 context)
         {
             _context = context;
         }
 
         public IList<Leaf> leaves { get; set; }
 		public bool exchaFlag { get; set; }  //交換申請可能か
+		public double? appliPeriod { get; set; }  //交換申請されているか
 		public bool createFlag { get; set; }  //作成権限ありなし
 		public bool commentFlag { get; set; }   //コメント権限ありなし
 
@@ -49,6 +50,7 @@ namespace exchaRazor02.Pages.Leaves
 					(diary.exid == authId)
 					&& (diary.retTime > DateTime.Now)
 					);
+				appliPeriod = await DiaryAuth.applied(user, _context, diary);
 			}
 			return Page();
 		}

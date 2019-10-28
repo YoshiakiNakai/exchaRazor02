@@ -25,13 +25,71 @@ function apply() {
 
     var data = {
         "diaryId": l('diaryId').value,
-        "period": l('exchaPeriod').value,
-        "token": "",
+		"exchaPeriod": l('exchaPeriod').value,
+		"token": l('token').value,
     };
 
 	//XMLHttpRequestの設定
 	var xhr = new XMLHttpRequest();
 	xhr.open("POST", '/api/Appli/apply', true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+	//イベントハンドラの登録
+	xhr.onreadystatechange = function () { // 状態が変化すると関数が呼び出されます。
+        if (this.readyState === XMLHttpRequest.DONE) {
+			console.log("response: " + this.responseText);
+            if (this.responseText === "true") {
+                console.log("成功");
+            } else {
+                console.log("失敗");
+			}
+		}
+	}
+	//送信
+	console.log("send: " + encodeHTMLForm(data));
+	xhr.send(encodeHTMLForm(data));
+}
+
+//交換承諾する
+function accept() {
+
+    var data = {
+        "exid": l('diaryId').value,
+		"token": l('token').value,
+    };
+
+	//XMLHttpRequestの設定
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", '/api/Appli/accept', true);
+	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+	//イベントハンドラの登録
+	xhr.onreadystatechange = function () { // 状態が変化すると関数が呼び出されます。
+        if (this.readyState === XMLHttpRequest.DONE) {
+			console.log("response: " + this.responseText);
+            if (this.responseText === "true") {
+                console.log("成功");
+            } else {
+                console.log("失敗");
+			}
+		}
+	}
+	//送信
+	console.log("send: " + encodeHTMLForm(data));
+	xhr.send(encodeHTMLForm(data));
+}
+
+//交換拒否する
+function reject() {
+
+    var data = {
+        "exid": l('diaryId').value,
+		"token": l('token').value,
+    };
+
+	//XMLHttpRequestの設定
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", '/api/Appli/reject', true);
 	xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 	//イベントハンドラの登録

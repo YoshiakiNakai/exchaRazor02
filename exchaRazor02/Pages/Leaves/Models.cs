@@ -16,9 +16,17 @@ namespace exchaRazor02.Pages.Leaves
 	//日記の権限確認を行う
 	public static class DiaryAuth
 	{
+		//最新のleafの日時を取得する
+		public static async Task<DateTime?> getLatest(string diaryId, ExchaDContext8 context)
+		{
+			IQueryable<Leaf> ql = context.leaves.Where(l => l.diaryId == diaryId);
+			if (ql.Count() == 0) return null;
+			return await ql.MaxAsync(l => l.time);
+		}
+
 		//日記を閲覧する権限があるか
 		//引数１：アクセスユーザ
-		//引数２：日記
+		//引数２：読みたい日記
 		//戻り値：true 読める、false 読めない
 		public static bool authRead(ClaimsPrincipal user, Diary diary)
 		{
@@ -62,7 +70,7 @@ namespace exchaRazor02.Pages.Leaves
 
 		//Leafを作成する権限があるか
 		//引数１：アクセスユーザ
-		//引数２：日記
+		//引数２：leafを作る日記
 		//戻り値：true 作成可能、false 不可能
 		public static bool authCreateLeaf(ClaimsPrincipal user, Diary diary)
 		{
@@ -86,32 +94,33 @@ namespace exchaRazor02.Pages.Leaves
 			return flag;
 		}
 
-		//交換する権限があるか
+		//交換申請可能か
 		//引数１：アクセスユーザ
-		//引数２：対象日記
+		//引数２：DB
+		//引数３：相手の日記
 		//戻り値：true 可能
-		public async static Task<bool> authExcha(ClaimsPrincipal user, ExchaDContext7 context, Diary diary)
+		public async static Task<bool> authExcha(ClaimsPrincipal user, ExchaDContext8 context, Diary diary)
 		{
 			if (!user.Identity.IsAuthenticated) return false;
 
-			bool flag = false;  //戻り値：可不可フラグ
-
-			//交換する権限があるか、確認する
-			// 自分でない、かつ、交換可能、かつ、未申請、ならば可能
+			bool flag = false;  //戻り値
 
 			//最新のleafの日時を取得する
-			DateTime latest = await context.leaves
-				.Where(l => l.diaryId == diary.Id)
-				.MaxAsync(l => l.time);
+			IQueryable<Leaf> ql = context.leaves.Where(l => l.diaryId == diary.Id);
+			if (ql.Count() == 0) return false;
+			DateTime latest = await ql.MaxAsync(l => l.time);
 			string authId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
 
 			Diary my = await context.diaries.FindAsync(authId);
 
+			//自分でない、かつ、両者交換可能、かつ、未申請、ならば申請可能
 			//交換可能か
-			if((my.excha == EXCHA.able)
+			if ((my.excha == EXCHA.able)
+				&& (diary.excha == EXCHA.able)
 				&& (diary.Id != authId)) {
-				//未申請、かつ、自分でない、ならば可能
-				flag = !context.appli.Any(a => (
+				//申請しているか
+				flag = context.appli
+					.Any(a => (
 						(a.diaryId == diary.Id)
 						&& (a.leafTime == latest))
 						&& (a.apid == authId));
@@ -119,13 +128,42 @@ namespace exchaRazor02.Pages.Leaves
 			return flag;
 		}
 
+		//交換申請されているか
+		//引数１：アクセスユーザ
+		//引数２：DB
+		//引数３：相手
+		//戻り値：申請されているとき、交換期間。されていないとき、null
+		public async static Task<double?> applied(ClaimsPrincipal user, ExchaDContext8 context, Diary diary)
+		{
+			if (!user.Identity.IsAuthenticated) return null;
+
+			double? period = null;
+
+			string authId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
+			//交換申請されているか
+			IQueryable<Leaf> leaves = context.leaves.Where(l => l.diaryId == authId);
+			if (leaves.Count() != 0) {
+				DateTime latest = await leaves.MaxAsync(l => l.time);
+				Appli appli = context.appli
+					.Where(a =>
+						(a.diaryId == authId)
+						&& (a.leafTime == latest)
+						&& (a.accept == EXCHA_ACCEPT.yet)
+						&& (a.apid == diary.Id))
+					.FirstOrDefault();
+				if (appli != null) {
+					period = appli.period;
+				}
+			}
+			return period;
+		}
 
 		//Leafを編集する権限があるか
 		//引数１：アクセスユーザ
 		//引数２：DB
 		//引数３：編集するleaf
 		//戻り値：true 編集可能、false 不可能
-		public static async Task<bool> authEditLeaf(ClaimsPrincipal user, ExchaDContext7 context, Leaf leaf)
+		public static async Task<bool> authEditLeaf(ClaimsPrincipal user, ExchaDContext8 context, Leaf leaf)
 		{
 			bool flag = false;  //戻り値：編集可不可フラグ
 
@@ -161,7 +199,7 @@ namespace exchaRazor02.Pages.Leaves
 		//引数２：DB
 		//引数３：コメントするleaf
 		//戻り値：true コメント可能、false 不可能
-		public static async Task<bool> authCommentLeaf(ClaimsPrincipal user, ExchaDContext7 context, Leaf leaf)
+		public static async Task<bool> authCommentLeaf(ClaimsPrincipal user, ExchaDContext8 context, Leaf leaf)
 		{
 			bool flag = false;  //戻り値：コメント可不可フラグ
 

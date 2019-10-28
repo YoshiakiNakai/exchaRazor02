@@ -9,9 +9,9 @@ using exchaRazor02.Data;
 
 namespace exchaRazor02.Migrations
 {
-    [DbContext(typeof(ExchaDContext7))]
-    [Migration("20191026131625_ver7")]
-    partial class ver7
+    [DbContext(typeof(ExchaDContext8))]
+    [Migration("20191028013438_ver8")]
+    partial class ver8
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

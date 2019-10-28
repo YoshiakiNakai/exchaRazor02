@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 using exchaRazor02.Data;
 using PasswordHashing;
@@ -23,10 +24,10 @@ namespace exchaRazor02.Pages.Account
 	[AutoValidateAntiforgeryToken]
 	public class LoginModel : PageModel
     {
-		private readonly exchaRazor02.Data.ExchaDContext7 _context;
+		private readonly exchaRazor02.Data.ExchaDContext8 _context;
 
 		//コンストラクタ
-		public LoginModel(exchaRazor02.Data.ExchaDContext7 context)
+		public LoginModel(exchaRazor02.Data.ExchaDContext8 context)
 		{
 			_context = context;
 		}
@@ -79,6 +80,9 @@ namespace exchaRazor02.Pages.Account
 			//認証情報の登録
 			var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);	//Cookie認証を利用する
 			identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, Input.diaryId)); //Idを格納
+			var salt = new byte[8];
+			RandomNumberGenerator.Create().GetBytes(salt);
+			identity.AddClaim(new Claim(ClaimTypes.Sid, Convert.ToBase64String(salt))); //csrf用id
 
 			//ログイン
 			await HttpContext.SignInAsync(
@@ -86,7 +90,7 @@ namespace exchaRazor02.Pages.Account
 			  new ClaimsPrincipal(identity),
 			  new AuthenticationProperties
 			  {
-				  IsPersistent = false,  //ブラウザを閉じたとき、ログインを維持するか
+				  IsPersistent = true,  //ブラウザを閉じたとき、ログインを維持するか
 				  ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
 			  });
 			return LocalRedirect(returnUrl ?? Url.Content("~/"));

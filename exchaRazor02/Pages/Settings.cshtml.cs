@@ -20,9 +20,9 @@ namespace exchaRazor02.Pages
 	[AutoValidateAntiforgeryToken]
 	public class SettingsModel : PageModel
     {
-        private readonly exchaRazor02.Data.ExchaDContext7 _context;
+        private readonly exchaRazor02.Data.ExchaDContext8 _context;
 
-        public SettingsModel(exchaRazor02.Data.ExchaDContext7 context)
+        public SettingsModel(exchaRazor02.Data.ExchaDContext8 context)
         {
             _context = context;
 			form = new FormModel();

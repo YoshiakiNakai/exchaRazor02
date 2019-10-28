@@ -1,5 +1,6 @@
 ﻿@page "{id?}"
 @using System.Security.Claims;
+@using PasswordHashing;
 @model exchaRazor02.Pages.Leaves.IndexModel
 
 @{
@@ -10,6 +11,7 @@
 @{
     //新しいページを作る
     //交換申請する
+    //交換承諾する、交換拒否する
     //コメントする
     //日記一覧へ
     if (!HttpContext.User.Identity.IsAuthenticated)
@@ -23,13 +25,26 @@
         {   //新しくページを作る
             <a href="./WR?id=@authId" class="lineLink">新しいページを作る</a>
         }
+        else if (Model.exchaFlag && Model.appliPeriod != null)
+        {   //承諾拒否
+            <button onclick="accept()" class="mybtn">承諾する</button>
+            <button onclick="reject()" class="mybtn">拒否する</button>
+            <br />
+            <text>交換期間：</text>
+            <input id="exchaPeriod" value="@Model.appliPeriod" readonly />
+            <text>hour</text>
+            <input id="diaryId" type="hidden" value="@Model.leaves[0].diaryId" />
+            <input id="token" type="hidden" value="@PBKDF2.Hash(HttpContext.User.FindFirst(ClaimTypes.Sid).Value, 8, 2)" />
+        }
         else if (Model.exchaFlag)
         {   //交換申請
-            <button onclick="apply()" class="mybtn">交換申請する</button><br />
+            <button onclick="apply()" class="mybtn">交換申請する</button>
+            <br />
             <text>交換期間：</text>
             <input id="exchaPeriod" type="number" min="1" max="255" value="24" />
             <text>hour</text>
             <input id="diaryId" type="hidden" value="@Model.leaves[0].diaryId" />
+            <input id="token" type="hidden" value="@PBKDF2.Hash(HttpContext.User.FindFirst(ClaimTypes.Sid).Value, 8, 2)" />
         }
         else if (Model.commentFlag)
         {   //コメントする
@@ -65,7 +80,7 @@
                 <td>@Html.DisplayFor(modelItem => item.time)</td>
                 <td>@Html.DisplayFor(modelItem => item.comment)</td>
                 <td>
-                    <a href="/Leaves/WR?id=@item.diaryId&@item.time">開く</a>
+                    <a href="/Leaves/WR?id=@item.diaryId&time=@item.time">開く</a>
                 </td>
             </tr>
         }

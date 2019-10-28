@@ -8,8 +8,8 @@ using exchaRazor02.Data;
 
 namespace exchaRazor02.Migrations
 {
-    [DbContext(typeof(ExchaDContext7))]
-    partial class ExchaDContext7ModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ExchaDContext8))]
+    partial class ExchaDContext8ModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
