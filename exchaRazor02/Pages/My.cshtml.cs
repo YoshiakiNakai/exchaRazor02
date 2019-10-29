@@ -24,13 +24,14 @@ namespace exchaRazor02.Pages
 		public MyModel(exchaRazor02.Data.ExchaDContext8 context)
 		{
 			_context = context;
+			diary = new Diary();
 		}
 
 		public async void OnGetAsync()
         {
 			//HttpContext.User.Identity.IsAuthenticated
-			//var authId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-			diary = await _context.diaries.FindAsync(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+			string authId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+			diary = await _context.diaries.FindAsync(authId);
 		}
 	}
 }

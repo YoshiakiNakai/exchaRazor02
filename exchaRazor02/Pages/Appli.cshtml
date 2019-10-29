@@ -1,5 +1,13 @@
 ﻿@page
 @model exchaRazor02.Pages.appliModel
+@{
+    ViewData["Title"] = "交換希望一覧";
+}
+
+<h1>ViewData["Title"]</h1>
+<a href="/My" class="nrmLink">戻る</a>
+<br />
+<br />
 
 @{
     if (Model.appli == null)
@@ -13,9 +21,8 @@
             <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => model.appli[0].apid)</th>
-                    <th>@Html.DisplayNameFor(model => model.appli[0].accept)</th>
                     <th>@Html.DisplayNameFor(model => model.appli[0].period)</th>
-                    <th>link</th>
+                    <th><!--リンク用--></th>
                 </tr>
             </thead>
             <tbody>
@@ -23,7 +30,6 @@
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => item.apid)</td>
-                        <td>@Html.DisplayFor(modelItem => item.accept)</td>
                         <td>@Html.DisplayFor(modelItem => item.period) h</td>
                         <td><a href="~/Leaves/Index?id=@item.apid" class="nrmLink">開く</a></td>
                     </tr>

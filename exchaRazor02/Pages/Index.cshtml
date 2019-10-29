@@ -11,8 +11,15 @@
 
 <br />
 <a asp-page="/Create" class="btnLink">日記を作る</a>
-<br /><br /><a asp-page="/My" class="btnLink">マイページへ</a>
-<br /><br /><a asp-page="/Diaries" class="btnLink">日記一覧へ</a>
+<br />
+<br /><a asp-page="/My" class="btnLink">マイページへ</a>
+<br />
+<br /><a asp-page="/Diaries" class="btnLink">日記一覧へ</a>
 
 
-<br /><br /><a href="/Account/Login" class="nrmLink">ログイン</a>
+<br />
+<br /><a href="/Account/Login" class="nrmLink">ログイン</a>
+@if (HttpContext.User.Identity.IsAuthenticated)
+{
+    @HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
+}

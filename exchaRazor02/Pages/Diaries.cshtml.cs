@@ -22,7 +22,7 @@ namespace exchaRazor02.Pages
 
         public async Task OnGetAsync()
         {
-            Diaries = await _context.diaries.ToListAsync();
+            Diaries = await _context.diaries.OrderByDescending(d => d.last).ToListAsync();
         }
     }
 }

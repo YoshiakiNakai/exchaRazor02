@@ -61,17 +61,17 @@ namespace exchaRazor02.Data
 		[Display(Name = "付箋")]
 		public string note { get; set; }
 
-		[Display(Name = "最後の日付")]
+		[Display(Name = "ログイン日")]
 		[DataType(DataType.DateTime)]
 		public DateTime last { get; set; }	//最終ログイン
 
 		[Display(Name = "公開非公開")]
 		public PUBLICITY pub { get; set; }
-
+		[Display(Name = "交換")]
 		public EXCHA excha { get; set; }	//交換可不可
 		public WRITA writa { get; set; }    //記述可不可
 
-		[Display(Name = "返す日")]
+		[Display(Name = "返却日")]
 		[DataType(DataType.DateTime)]
 		public DateTime retTime { get; set; }	//
 		public string exid { get; set; }	//交換相手
