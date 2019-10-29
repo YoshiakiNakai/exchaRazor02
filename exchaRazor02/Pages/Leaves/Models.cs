@@ -17,7 +17,7 @@ namespace exchaRazor02.Pages.Leaves
 	public static class DiaryAuth
 	{
 		//最新のleafの日時を取得する
-		public static async Task<DateTime?> getLatest(string diaryId, ExchaDContext8 context)
+		public static async Task<DateTime?> getLatest(string diaryId, ExchaDContext9 context)
 		{
 			IQueryable<Leaf> ql = context.leaves.Where(l => l.diaryId == diaryId);
 			if (ql.Count() == 0) return null;
@@ -99,7 +99,7 @@ namespace exchaRazor02.Pages.Leaves
 		//引数２：DB
 		//引数３：相手の日記
 		//戻り値：true 可能
-		public async static Task<bool> authExcha(ClaimsPrincipal user, ExchaDContext8 context, Diary diary)
+		public async static Task<bool> authExcha(ClaimsPrincipal user, ExchaDContext9 context, Diary diary)
 		{
 			if (!user.Identity.IsAuthenticated) return false;
 
@@ -128,18 +128,6 @@ namespace exchaRazor02.Pages.Leaves
 						&& (a.leafTime == latest)
 						&& (a.apid == authId)
 						);
-				//flag = !context.appli
-				//	.Any(a =>
-				//		(a.diaryId == diary.Id)
-				//		);
-				//flag = !context.appli
-				//	.Any(a =>
-				//		(a.leafTime == latest)
-				//		);
-				//flag = !context.appli
-				//	.Any(a =>
-				//		(a.apid == authId)
-				//		);
 			}
 			return flag;
 		}
@@ -149,7 +137,7 @@ namespace exchaRazor02.Pages.Leaves
 		//引数２：DB
 		//引数３：相手
 		//戻り値：申請されているとき、交換期間。されていないとき、null
-		public async static Task<double?> applied(ClaimsPrincipal user, ExchaDContext8 context, Diary diary)
+		public async static Task<double?> applied(ClaimsPrincipal user, ExchaDContext9 context, Diary diary)
 		{
 			if (!user.Identity.IsAuthenticated) return null;
 
@@ -179,7 +167,7 @@ namespace exchaRazor02.Pages.Leaves
 		//引数２：DB
 		//引数３：編集するleaf
 		//戻り値：true 編集可能、false 不可能
-		public static async Task<bool> authEditLeaf(ClaimsPrincipal user, ExchaDContext8 context, Leaf leaf)
+		public static async Task<bool> authEditLeaf(ClaimsPrincipal user, ExchaDContext9 context, Leaf leaf)
 		{
 			bool flag = false;  //戻り値：編集可不可フラグ
 
@@ -215,7 +203,7 @@ namespace exchaRazor02.Pages.Leaves
 		//引数２：DB
 		//引数３：コメントするleaf
 		//戻り値：true コメント可能、false 不可能
-		public static async Task<bool> authCommentLeaf(ClaimsPrincipal user, ExchaDContext8 context, Leaf leaf)
+		public static async Task<bool> authCommentLeaf(ClaimsPrincipal user, ExchaDContext9 context, Leaf leaf)
 		{
 			bool flag = false;  //戻り値：コメント可不可フラグ
 

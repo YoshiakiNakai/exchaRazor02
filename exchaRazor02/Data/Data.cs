@@ -96,7 +96,7 @@ namespace exchaRazor02.Data
 		}
 
 		public string diaryId { get; set; }
-		[Display(Name = "日付")]
+		[Display(Name = "記述日")]
 		[DataType(DataType.DateTime)]
 		public DateTime time { get; set; }
 

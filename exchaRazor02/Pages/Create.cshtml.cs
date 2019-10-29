@@ -18,10 +18,10 @@ namespace exchaRazor02.Pages
 	public class CreateModel : PageModel
     {
 		private readonly ILogger<CreateModel> _logger;
-		private readonly exchaRazor02.Data.ExchaDContext8 _context;
+		private readonly exchaRazor02.Data.ExchaDContext9 _context;
 		
 		//コンストラクタ
-        public CreateModel(ILogger<CreateModel> logger, exchaRazor02.Data.ExchaDContext8 context)
+        public CreateModel(ILogger<CreateModel> logger, exchaRazor02.Data.ExchaDContext9 context)
         {
 			_logger = logger;
 			_context = context;

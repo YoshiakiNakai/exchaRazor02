@@ -13,9 +13,9 @@ namespace exchaRazor02.Pages.Leaves
 {
     public class IndexModel : PageModel
     {
-        private readonly exchaRazor02.Data.ExchaDContext8 _context;
+        private readonly exchaRazor02.Data.ExchaDContext9 _context;
 
-        public IndexModel(exchaRazor02.Data.ExchaDContext8 context)
+        public IndexModel(exchaRazor02.Data.ExchaDContext9 context)
         {
             _context = context;
         }

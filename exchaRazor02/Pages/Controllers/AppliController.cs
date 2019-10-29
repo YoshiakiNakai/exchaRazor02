@@ -24,9 +24,9 @@ namespace exchaRazor02.Pages.Controllers
 	[Authorize]
 	public class AppliController : ControllerBase
     {
-        private readonly ExchaDContext8 _context;
+        private readonly ExchaDContext9 _context;
 
-        public AppliController(ExchaDContext8 context)
+        public AppliController(ExchaDContext9 context)
         {
             _context = context;
         }

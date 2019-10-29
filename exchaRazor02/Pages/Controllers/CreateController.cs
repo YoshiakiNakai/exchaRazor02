@@ -13,9 +13,9 @@ namespace exchaRazor02.Pages.Controllers
     [ApiController]
     public class CreateController : ControllerBase
     {
-        private readonly ExchaDContext8 _context;
+        private readonly ExchaDContext9 _context;
 
-        public CreateController(ExchaDContext8 context)
+        public CreateController(ExchaDContext9 context)
         {
             _context = context;
         }

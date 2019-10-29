@@ -24,10 +24,10 @@ namespace exchaRazor02.Pages.Account
 	[AutoValidateAntiforgeryToken]
 	public class LoginModel : PageModel
     {
-		private readonly exchaRazor02.Data.ExchaDContext8 _context;
+		private readonly exchaRazor02.Data.ExchaDContext9 _context;
 
 		//コンストラクタ
-		public LoginModel(exchaRazor02.Data.ExchaDContext8 context)
+		public LoginModel(exchaRazor02.Data.ExchaDContext9 context)
 		{
 			_context = context;
 		}
@@ -90,7 +90,7 @@ namespace exchaRazor02.Pages.Account
 			  new ClaimsPrincipal(identity),
 			  new AuthenticationProperties
 			  {
-				  IsPersistent = true,  //ブラウザを閉じたとき、ログインを維持するか
+				  IsPersistent = false,  //ブラウザを閉じたとき、ログインを維持するか
 				  ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
 			  });
 			return LocalRedirect(returnUrl ?? Url.Content("~/"));

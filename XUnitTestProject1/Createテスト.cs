@@ -16,7 +16,7 @@ namespace XUnitTestProject1
 	{
 		private readonly ILogger<CreateModel> _logger;
 		private CreateModel model;
-		private ExchaDContext8 context;
+		private ExchaDContext9 context;
 
 
 		public Createテスト()
@@ -37,11 +37,11 @@ namespace XUnitTestProject1
 			_logger.Log(LogLevel.Error, "CreateテストLogger");
 			_logger.Log(LogLevel.Debug, "CreateテストLogger");
 
-			var options = new DbContextOptionsBuilder<ExchaDContext8>()
+			var options = new DbContextOptionsBuilder<ExchaDContext9>()
 				.UseInMemoryDatabase(databaseName: "DbName")
 				.Options;
 
-			context = new ExchaDContext8(options);
+			context = new ExchaDContext9(options);
 
 			//id="dup"を事前登録する
 			context.diaries.Add(new Diary("dup", "pass", "note", DateTime.Now, PUBLICITY.pub, EXCHA.able, WRITA.able, DateTime.Now, "exid"));

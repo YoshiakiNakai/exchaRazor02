@@ -17,11 +17,11 @@ namespace exchaRazor02.Pages
     public class MyModel : PageModel
     {
 
-		private readonly exchaRazor02.Data.ExchaDContext8 _context;
+		private readonly exchaRazor02.Data.ExchaDContext9 _context;
 
 		public Diary diary;
 
-		public MyModel(exchaRazor02.Data.ExchaDContext8 context)
+		public MyModel(exchaRazor02.Data.ExchaDContext9 context)
 		{
 			_context = context;
 			diary = new Diary();

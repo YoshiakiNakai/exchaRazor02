@@ -11,11 +11,12 @@
 @{
     if (Model.diary.retTime > DateTime.Now)
     {   //交換中
+    <p>返却日：@Model.diary.retTime</p>
         <a href="/Leaves/Index?id=@Model.diary.exid" class="h5 lineLink">交換相手の日記を開く</a>
 
         <br />
         <a href="/Diaries" class="h5 lineLink">日記一覧へ</a>
-    } else { 
+    } else {
         //通常
         <a href="/Leaves/Index?id=@(userId)" class="h5 lineLink">日記を開く</a>
 

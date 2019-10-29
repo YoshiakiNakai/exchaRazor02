@@ -20,9 +20,9 @@ namespace exchaRazor02.Pages.Leaves
 	public class WRModel : PageModel
     {
 		private readonly ILogger<WRModel> _logger;
-		private readonly exchaRazor02.Data.ExchaDContext8 _context;
+		private readonly exchaRazor02.Data.ExchaDContext9 _context;
 
-        public WRModel(exchaRazor02.Data.ExchaDContext8 context, ILogger<WRModel> logger)
+        public WRModel(exchaRazor02.Data.ExchaDContext9 context, ILogger<WRModel> logger)
         {
             _context = context;
 			_logger = logger;
