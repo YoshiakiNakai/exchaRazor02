@@ -48,7 +48,8 @@ namespace exchaRazor02.Pages
 			//パスワードをハッシュ化する
 			this.Diary.pass = PBKDF2.Hash(this.Diary.pass).ToString();
 
-			//日記、その他の項目を初期設定する。(id, note, pubは、POSTされた値を使用する)
+			//日記、その他の項目を初期設定する。(id, noteは、POSTされた値を使用する)
+			this.Diary.pub = PUBLICITY.pub;
 			this.Diary.last = DateTime.Now;
 			this.Diary.excha = EXCHA.disable;
 			this.Diary.writa = WRITA.able;

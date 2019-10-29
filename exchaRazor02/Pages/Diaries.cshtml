@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "日記一覧";
 }
-<h1>ViewData["Title"]</h1>
+<h1>@ViewData["Title"]</h1>
 <a href="/" class="nrmLink">ホームへ戻る</a>
 <br />
 <br />
@@ -34,7 +34,11 @@
                     <td>不可</td>
                 }
                 <td>@item.last.ToShortDateString().Substring(5).Replace("/", " ")</td>
-                <td>@item.last.ToShortDateString().Substring(5).Replace("/", " ")</td>
+@if (item.retTime > DateTime.Now) {
+                <td>@item.retTime.ToShortDateString().Substring(5).Replace("/", " ")</td>
+} else {
+                <td>未交換</td>
+}
                 <td>
                     @{
                         if (
