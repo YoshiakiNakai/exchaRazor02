@@ -9,25 +9,10 @@
 
 <p>サイト紹介</p>
 
-<br /><a href="/Account/Login/" class="lineLink">ログイン</a>
-
 <br />
-<form method="post">
-    <input type="submit" value="ログアウト" class="mybtn" />
-</form>
+<a asp-page="/Create" class="btnLink">日記を作る</a>
+<br /><br /><a asp-page="/My" class="btnLink">マイページへ</a>
+<br /><br /><a asp-page="/Diaries" class="btnLink">日記一覧へ</a>
 
-<br /><a asp-page="/Create" class="lineLink">日記を作る</a>
-<br /><a asp-page="/My">マイページ</a>
-<br /><a asp-page="/Diaries">日記一覧</a>
 
-<br />ID:
-@{
-    if (HttpContext.User.Identity.IsAuthenticated)
-    {
-        @(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)
-    }
-    else
-    {
-        @("未ログイン")
-    }
-}
+<br /><br /><a href="/Account/Login" class="nrmLink">ログイン</a>

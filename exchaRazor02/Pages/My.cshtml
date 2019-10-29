@@ -8,13 +8,25 @@
 
 <h1>@ViewData["Title"]　<text class="sm">：@(userId)</text></h1>
 
-<a href="/Leaves/Index?id=@(userId)" class="h5 lineLink">日記を開く</a>
+@{
+    if (Model.diary.retTime > DateTime.Now)
+    {   //交換中
+        <a href="/Leaves/Index?id=@Model.diary.exid" class="h5 lineLink">交換相手の日記を開く</a>
 
-<br />
-<a href="/Diaries" class="h5 lineLink">交換相手を探す</a>
+        <br />
+        <a href="/Diaries" class="h5 lineLink">日記一覧へ</a>
+    }
+    else
+    {   //通常
+        <a href="/Leaves/Index?id=@(userId)" class="h5 lineLink">日記を開く</a>
 
-<br />
-<a href="/Appli" class="h5 lineLink">交換リクエストに応じる</a>
+        <br />
+        <a href="/Diaries" class="h5 lineLink">交換相手を探す</a>
 
-<br />
-<a href="/Settings" class="h5 lineLink">日記の設定</a>
+        <br />
+        <a href="/Appli" class="h5 lineLink">交換リクエストに応じる</a>
+
+        <br />
+        <a href="/Settings" class="h5 lineLink">日記の設定</a>
+    }
+}

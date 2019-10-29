@@ -111,6 +111,7 @@ namespace exchaRazor02.Data
 		public string contents { get; set; }
 		[Display(Name = "交換相手")]
 		public string exid { get; set; }
+		[MinLength(1)]
 		[MaxLength(65535)]
 		[Display(Name = "コメント")]
 		public string comment { get; set; }

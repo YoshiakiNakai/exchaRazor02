@@ -55,6 +55,7 @@ function apply(button) {
 
 //交換承諾する
 function reply(button) {
+	button.disabled = true;
 
     var data = {
         "excha": button.value,

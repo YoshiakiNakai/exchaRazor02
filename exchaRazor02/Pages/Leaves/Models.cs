@@ -228,7 +228,7 @@ namespace exchaRazor02.Pages.Leaves
 				.MaxAsync(l => l.time);
 
 			//Leafへコメントする権限があるか、確認する
-			//交換相手のとき、かつ、最新のLeaf、ならば可能
+			//交換相手のとき、かつ、最新のLeaf、未コメントleafならば可能
 
 			if (!user.Identity.IsAuthenticated) {
 				//未ログインのとき、不可能
@@ -236,6 +236,7 @@ namespace exchaRazor02.Pages.Leaves
 			else if (
 				(user.FindFirst(ClaimTypes.NameIdentifier).Value == diary.exid) //交換相手
 				&& (leaf.time == latest)	//最新leaf
+				//&& (leaf.exid == null)		//未コメント	//編集可能にする。タイムアップでのみ交換が終了する
 				) {
 				flag = true;
 			}

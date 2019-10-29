@@ -64,7 +64,7 @@ namespace exchaRazor02.Pages.Controllers
 
 			try {
 				await _context.SaveChangesAsync();
-			} catch (DbUpdateException ex) {
+			} catch (DbUpdateException) {
 
 				//申請済みか確認
 				if (_context.appli.Any(a => (
