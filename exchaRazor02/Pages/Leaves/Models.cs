@@ -137,11 +137,11 @@ namespace exchaRazor02.Pages.Leaves
 		//引数２：DB
 		//引数３：相手
 		//戻り値：申請されているとき、交換期間。されていないとき、null
-		public async static Task<double?> applied(ClaimsPrincipal user, ExchaDContext9 context, Diary diary)
+		public async static Task<int?> applied(ClaimsPrincipal user, ExchaDContext9 context, Diary diary)
 		{
 			if (!user.Identity.IsAuthenticated) return null;
 
-			double? period = null;
+			int? period = null;
 
 			string authId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
 			//交換申請されているか

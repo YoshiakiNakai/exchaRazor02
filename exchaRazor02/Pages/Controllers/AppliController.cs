@@ -39,7 +39,7 @@ namespace exchaRazor02.Pages.Controllers
 		[HttpPost]
 		[Route("apply")]
 		//[ValidateAntiForgeryToken]
-        public async Task<bool> apply(string diaryId, double exchaPeriod, string token)
+        public async Task<bool> apply(string diaryId, int exchaPeriod, string token)
         {
 			//POSTデータを取得する
 			// 引数で受け取る方法がわからないので、HttpContextから取得する
@@ -48,7 +48,7 @@ namespace exchaRazor02.Pages.Controllers
 			form.TryGetValue("diaryId", out value);
 			diaryId = value.ToString();
 			form.TryGetValue("exchaPeriod", out value);
-			exchaPeriod = double.Parse(value.ToString());
+			exchaPeriod = int.Parse(value.ToString());
 			form.TryGetValue("token", out value);
 			token = value.ToString();
 			if (!PBKDF2.Verify(HttpContext.User.FindFirst(ClaimTypes.Sid).Value, token)) return false;

@@ -27,8 +27,8 @@
         }
         else if (Model.exchaFlag && Model.appliPeriod != null)
         {   //承諾拒否
-            <button id="repAccept" onclick="reply(this)" class="mybtn" value="accept">交換する</button>
-            <button id="repReject" onclick="reply(this)" class="mybtn" value="reject">拒否する</button>
+            <button id="repAccept" onclick="reply()" class="mybtn" value="accept">交換する</button>
+            <button id="repReject" onclick="reply()" class="mybtn" value="reject">拒否する</button>
             <br />
             <text>交換期間：</text>
             <input id="exchaPeriod" value="@Model.appliPeriod" readonly style="width: 4em;" />
@@ -68,22 +68,22 @@
             <th>@Html.DisplayNameFor(model => model.leaves[0].time)</th>
             <th>@Html.DisplayNameFor(model => model.leaves[0].exid)</th>
             <th>@Html.DisplayNameFor(model => model.leaves[0].comment)</th>
-            <th><!--リンク--></th>
+            <th><!--リンク用スペース確保--></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.leaves)
         {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.title)</td>
-            <td class="hideOverWidth">@Html.DisplayFor(modelItem => item.contents)</td>
-            <td>@item.time.ToShortDateString().Substring(5).Replace("/", " ")</td>
-            <td class="hideOverWidth">@Html.DisplayFor(modelItem => item.exid)</td>
-            <td class="hideOverWidth">@Html.DisplayFor(modelItem => item.comment)</td>
-            <td>
-                <a href="/Leaves/WR?id=@item.diaryId&time=@item.time" class="nrmLink">開く</a>
-            </td>
-        </tr>
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.title)</td>
+                <td>@Html.DisplayFor(modelItem => item.contents)</td>
+                <td>@Html.DisplayFor(modelItem => item.exid)</td>
+                <td>@item.time.ToShortDateString().Substring(5).Replace("/", " ")</td>
+                <td>@Html.DisplayFor(modelItem => item.comment)</td>
+                <td>
+                    <a href="/Leaves/WR?id=@item.diaryId&time=@item.time" class="nrmLink">開く</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

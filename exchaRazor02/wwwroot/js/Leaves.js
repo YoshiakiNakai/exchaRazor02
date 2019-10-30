@@ -35,8 +35,8 @@ function apply(button) {
 
 //交換承諾する
 function reply() {
-	l('repAccept').disabled = true;
-	l('repReject').disabled = true;
+    l('repAccept').disabled = true;
+    l('repReject').disabled = true;
 
     var data = {
         "excha": button.value,
@@ -56,8 +56,6 @@ function reply() {
             if (this.responseText === "true") {
                 alert('回答しました');
             } else {
-				l('repAccept').disabled = false;
-				l('repReject').disabled = false;
                 alert('通信に失敗しました');
 			}
 		}
