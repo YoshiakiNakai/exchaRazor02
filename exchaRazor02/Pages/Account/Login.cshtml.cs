@@ -53,7 +53,7 @@ namespace exchaRazor02.Pages.Account
 
 
 		//Post
-		public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+		public async Task<IActionResult> OnPostAsync()
 		{
 			//必須入力がないなどの場合、処理しない
 			if (!ModelState.IsValid) return Page();
@@ -93,7 +93,7 @@ namespace exchaRazor02.Pages.Account
 				  IsPersistent = false,  //ブラウザを閉じたとき、ログインを維持するか
 				  ExpiresUtc = DateTime.UtcNow.AddMinutes(30),
 			  });
-			return LocalRedirect(returnUrl ?? Url.Content("~/"));
+			return LocalRedirect(Url.Content("~/"));	/* heroku上ではreturnUrlでエラーが発生する */
 		}
 	}
 }

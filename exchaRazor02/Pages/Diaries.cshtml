@@ -33,9 +33,9 @@
                 {
                     <td>不可</td>
                 }
-                <td>@item.last.ToShortDateString().Substring(5).Replace("/", " ")</td>
+                <td>@item.last.ToShortDateString().Substring(0, 5).Replace("/", " ")</td>
 @if (item.rettime > DateTime.Now) {
-                <td>@item.rettime.ToShortDateString().Substring(5).Replace("/", " ")</td>
+                <td>@item.rettime.ToShortDateString().Substring(0, 5).Replace("/", " ")</td>
 } else {
                 <td>未交換</td>
 }

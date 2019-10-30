@@ -9,18 +9,56 @@
 
 <br />
 <a asp-page="/Create" class="btnLink">日記を作る</a>
-<br />
-<br /><a asp-page="/My" class="btnLink">マイページへ</a>
+@{
+    <br />
+    @if (HttpContext.User.Identity.IsAuthenticated)
+    {
+        <br /><a asp-page="/My" class="btnLink">マイページへ</a>
+        /* @HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value */
+    }
+    else
+    {
+        <br /><a href="/Account/Login" class="btnLink">ログイン</a>
+    }
+
+}
 <br />
 <br /><a asp-page="/Diaries" class="btnLink">日記一覧へ</a>
 
-@{
-    /* デバッグ用
-    <br />
-    <br /><a href="/Account/Login" class="nrmLink">ログイン</a>
-    @if (HttpContext.User.Identity.IsAuthenticated)
-    {
-        @HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
-    }
-    */
-}
+<br>
+<hr />
+
+<p>
+    <h2 class="leftBlock">このサイトでできること</h2>
+<br>できること
+<br>・日記を書く
+<br>・交換する
+<br>・交換相手の日記にコメントする
+<br>
+<br>◆日記を書くには、
+<br>日記を作る
+<br>マイページ
+<br>　-> 日記を開く
+<br>　　-> 新しいページを作る
+<br>
+<br>◆交換するには
+<br>別の日記を見る（日記一覧へ）
+<br>　-> 交換:可 であることを確認する
+<br>　-> 誰かの日記を「開く」
+<br>　　-> 交換申請する
+<br>◇又は、
+<br>マイページ
+<br>　-> 交換リクエストに応じる
+<br>　　-> 開く
+<br>　　　-> 交換する
+<br>
+<br>◆相手の日記にコメントするには、
+<br>マイページ
+<br>　-> 交換相手の日記を開く
+<br>　　-> コメントする
+<br>
+<br>◆日記が戻ってくるのを待つには、
+<br>マイページ
+<br>　-> 返却日 になるまで待つ
+
+</p>

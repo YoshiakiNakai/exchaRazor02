@@ -78,7 +78,7 @@
                 <td>@Html.DisplayFor(modelItem => item.title)</td>
                 <td>@Html.DisplayFor(modelItem => item.contents)</td>
                 <td>@Html.DisplayFor(modelItem => item.exid)</td>
-                <td>@item.time.ToShortDateString().Substring(5).Replace("/", " ")</td>
+                <td>@item.time.ToShortDateString().Substring(0, 5).Replace("/", " ")</td>
                 <td>@Html.DisplayFor(modelItem => item.comment)</td>
                 <td>
                     <a href="/Leaves/WR?id=@item.diaryid&time=@item.time" class="nrmLink">開く</a>
