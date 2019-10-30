@@ -22,14 +22,16 @@
                 <textarea asp-for="form.note" class="form-control" placeholder="日記の紹介などご自由にどうぞ" rows="2"></textarea>
                 <span asp-validation-for="form.note" class="text-danger"></span>
             </div>
-            <!-- 公開非公開 -->
-            <div class="form-group">
-                <label class="control-label">日記の公開非公開</label><br />
-                <input asp-for="form.pub" type="radio" value="@PUBLICITY.pub">
-                <label asp-for="form.pub" style="color:black">公開　</label>
-                <input asp-for="form.pub" id="form_pri" type="radio" value="@PUBLICITY.pri">
-                <label asp-for="form.pub" for="form_pri" style="color:black">非公開　</label>
-            </div>
+            @{/* 使用しない
+                <!-- 公開非公開 -->
+                <div class="form-group">
+                    <label class="control-label">日記の公開非公開</label><br />
+                    <input asp-for="form.pub" type="radio" value="@PUBLICITY.pub">
+                    <label asp-for="form.pub" style="color:black">公開　</label>
+                    <input asp-for="form.pub" id="form_pri" type="radio" value="@PUBLICITY.pri">
+                    <label asp-for="form.pub" for="form_pri" style="color:black">非公開　</label>
+                </div>
+            */}
             <div class="form-group">
                 <input type="submit" value="変更" class="mybtn" />
             </div>
