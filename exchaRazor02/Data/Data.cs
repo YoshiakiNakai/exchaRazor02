@@ -134,7 +134,7 @@ namespace exchaRazor02.Data
 	{
 		//コンストラクタ
 		public Appli() { }
-		public Appli(string diaryId, DateTime leafTime, string apid, EXCHA_ACCEPT accept, double period)
+		public Appli(string diaryId, DateTime leafTime, string apid, EXCHA_ACCEPT accept, int period)
 		{
 			this.diaryId = diaryId;
 			this.leafTime = leafTime;
@@ -150,7 +150,7 @@ namespace exchaRazor02.Data
 		public string apid { get; set; }
 		public EXCHA_ACCEPT accept { get; set; }
 		[Display(Name = "交換期間")]
-		public double period { get; set; }
+		public int period { get; set; }
 
 		//Navigation Property
 		public Leaf leaf { get; set; }         //Leafに、制約される。

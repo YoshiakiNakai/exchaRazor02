@@ -22,7 +22,7 @@ namespace exchaRazor02.Pages.Leaves
 
         public IList<Leaf> leaves { get; set; }
 		public bool exchaFlag { get; set; }  //交換申請可能か
-		public double? appliPeriod { get; set; }  //交換申請されているか
+		public int? appliPeriod { get; set; }  //交換申請されているか
 		public bool createFlag { get; set; }  //作成権限ありなし
 		public bool commentFlag { get; set; }   //コメント権限ありなし
 
