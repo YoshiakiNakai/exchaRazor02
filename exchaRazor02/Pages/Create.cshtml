@@ -1,8 +1,11 @@
 ﻿@page
 @using exchaRazor02.Data;
 @model exchaRazor02.Pages.CreateModel
+@{
+    ViewData["Title"] = "日記を作る";
+}
 
-<h1>日記を作る</h1>
+<h1>@ViewData["Title"]</h1>
 <a href="/" class="nrmLink">ホームへ戻る</a>
 <br />
 <br />
@@ -39,16 +42,16 @@
                 <textarea asp-for="Diary.note" class="form-control" placeholder="日記の紹介などご自由にどうぞ" rows="2"></textarea>
                 <span asp-validation-for="Diary.note" class="text-danger"></span>
             </div>
-            @{/*    使用不可
-            <!-- 公開非公開 -->
-            <div class="form-group">
-                <label class="control-label">日記の公開非公開</label><br />
-                <input id="Diary_pub" type="radio" name="Diary.pub" value="@PUBLICITY.pub" checked>
-                <label for="Diary_pub" style="color:black">公開　</label>
-                <input id="Diary_pri" type="radio" name="Diary.pub" value="@PUBLICITY.pri">
-                <label for="Diary_pri" style="color:black">非公開　</label>
-            </div>
-            */}
+            @{/*    使用しない
+              <!-- 公開非公開 -->
+              <div class="form-group">
+                  <label class="control-label">日記の公開非公開</label><br />
+                  <input id="Diary_pub" type="radio" name="Diary.pub" value="@PUBLICITY.pub" checked>
+                  <label for="Diary_pub" style="color:black">公開　</label>
+                  <input id="Diary_pri" type="radio" name="Diary.pub" value="@PUBLICITY.pri">
+                  <label for="Diary_pri" style="color:black">非公開　</label>
+              </div>
+              */}
             <div class="form-group">
                 <input type="submit" value="日記を作成" class="mybtn" />
             </div>

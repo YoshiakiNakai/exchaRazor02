@@ -34,7 +34,7 @@ function apply(button) {
 }
 
 //交換承諾する
-function reply() {
+function reply(button) {
     l('repAccept').disabled = true;
     l('repReject').disabled = true;
 
