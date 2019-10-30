@@ -33,7 +33,7 @@
             <text>交換期間：</text>
             <input id="exchaPeriod" value="@Model.appliPeriod" readonly style="width: 4em;" />
             <text>hour</text>
-            <input id="diaryId" type="hidden" value="@Model.leaves[0].diaryId" />
+            <input id="diaryId" type="hidden" value="@Model.leaves[0].diaryid" />
             <input id="token" type="hidden" value="@PBKDF2.Hash(HttpContext.User.FindFirst(ClaimTypes.Sid).Value, 8, 2)" />
         }
         else if (Model.exchaFlag)
@@ -43,12 +43,12 @@
             <text>交換期間：</text>
             <input id="exchaPeriod" type="number" value="24" min="1" max="255" style="width: 4em;" />
             <text>hour</text>
-            <input id="diaryId" type="hidden" value="@Model.leaves[0].diaryId" />
+            <input id="diaryId" type="hidden" value="@Model.leaves[0].diaryid" />
             <input id="token" type="hidden" value="@PBKDF2.Hash(HttpContext.User.FindFirst(ClaimTypes.Sid).Value, 8, 2)" />
         }
         else if (Model.commentFlag)
         {   //コメントする
-            <a href="./WR?id=@Model.leaves[0].diaryId&time=@Model.leaves.Max(l => l.time)" class="lineLink">コメントする</a>
+            <a href="./WR?id=@Model.leaves[0].diaryid&time=@Model.leaves.Max(l => l.time)" class="lineLink">コメントする</a>
         }
         else
         {
@@ -81,7 +81,7 @@
                 <td>@item.time.ToShortDateString().Substring(5).Replace("/", " ")</td>
                 <td>@Html.DisplayFor(modelItem => item.comment)</td>
                 <td>
-                    <a href="/Leaves/WR?id=@item.diaryId&time=@item.time" class="nrmLink">開く</a>
+                    <a href="/Leaves/WR?id=@item.diaryid&time=@item.time" class="nrmLink">開く</a>
                 </td>
             </tr>
         }

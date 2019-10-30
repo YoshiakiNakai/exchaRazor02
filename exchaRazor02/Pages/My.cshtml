@@ -9,9 +9,9 @@
 <h1>@ViewData["Title"]　<text class="sm">：@(userId)</text></h1>
 
 @{
-    if (Model.diary.retTime > DateTime.Now)
+    if (Model.diary.rettime > DateTime.Now)
     {   //交換中
-    <p>返却日：@Model.diary.retTime</p>
+    <p>返却日：@Model.diary.rettime</p>
         <a href="/Leaves/Index?id=@Model.diary.exid" class="h5 lineLink">交換相手の日記を開く</a>
 
         <br />

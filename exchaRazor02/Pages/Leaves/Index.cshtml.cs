@@ -40,7 +40,7 @@ namespace exchaRazor02.Pages.Leaves
 			if (!DiaryAuth.authRead(user, diary)) return StatusCode(403);
 			//閲覧権限があるとき
 			//内容を表示する
-			leaves = await _context.leaves.Where(l => l.diaryId == id).ToListAsync();
+			leaves = await _context.leaves.Where(l => l.diaryid == id).ToListAsync();
 			if (user.Identity.IsAuthenticated) {
 				string authId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
 				//ログイン中のとき
@@ -48,7 +48,7 @@ namespace exchaRazor02.Pages.Leaves
 				createFlag = DiaryAuth.authCreateLeaf(user, diary);
 				commentFlag = (
 					(diary.exid == authId)
-					&& (diary.retTime > DateTime.Now)
+					&& (diary.rettime > DateTime.Now)
 					);
 				appliPeriod = await DiaryAuth.applied(user, _context, diary);
 			}

@@ -46,7 +46,7 @@ namespace exchaRazor02.Pages
         {
 			//認証情報から日記を取得
 			string id = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-			Diary diary = await _context.diaries.FirstOrDefaultAsync(m => m.Id == id);
+			Diary diary = await _context.diaries.FirstOrDefaultAsync(m => m.id == id);
 
 			if (diary == null) return NotFound();
 
@@ -63,7 +63,7 @@ namespace exchaRazor02.Pages
 
 			//認証情報から日記を取得
 			string id = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-			Diary diary = await _context.diaries.FirstOrDefaultAsync(m => m.Id == id);
+			Diary diary = await _context.diaries.FirstOrDefaultAsync(m => m.id == id);
 
 			//POSTデータを適用
 			diary.note = form.note;
@@ -74,7 +74,7 @@ namespace exchaRazor02.Pages
 			try {
                 await _context.SaveChangesAsync();
             } catch (DbUpdateConcurrencyException) {
-                if (!_context.diaries.Any(e => e.Id == diary.Id)) return NotFound();
+                if (!_context.diaries.Any(e => e.id == diary.id)) return NotFound();
                 else throw;
             }
 

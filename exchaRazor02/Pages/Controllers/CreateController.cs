@@ -33,7 +33,7 @@ namespace exchaRazor02.Pages.Controllers
 			form.TryGetValue("id", out value);
 			id = value.ToString();
 
-			return (_context.diaries.Any(e => e.Id == id));
+			return (_context.diaries.Any(e => e.id == id));
 		}
 	}
 }

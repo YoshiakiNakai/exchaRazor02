@@ -30,14 +30,14 @@ namespace exchaRazor02.Pages
         public async Task OnGetAsync()
         {
 			string authId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-			IQueryable<Leaf> leaves = _context.leaves.Where(l => l.diaryId == authId);
+			IQueryable<Leaf> leaves = _context.leaves.Where(l => l.diaryid == authId);
 			if (leaves.Count() == 0) return;
 
 			DateTime latest = await leaves.MaxAsync(l => l.time);
 			appli = await _context.appli
 				.Where(a =>
-					(a.diaryId == authId)
-					&& (a.leafTime == latest)
+					(a.diaryid == authId)
+					&& (a.leaftime == latest)
 					&& (a.accept == EXCHA_ACCEPT.yet)
 					)
 				.ToListAsync();

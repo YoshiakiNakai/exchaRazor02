@@ -47,7 +47,7 @@ namespace exchaRazor02.Pages.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDiary(string id, Diary diary)
         {
-            if (id != diary.Id)
+            if (id != diary.id)
             {
                 return BadRequest();
             }
@@ -86,7 +86,7 @@ namespace exchaRazor02.Pages.Controllers
             }
             catch (DbUpdateException)
             {
-                if (DiaryExists(diary.Id))
+                if (DiaryExists(diary.id))
                 {
                     return Conflict();
                 }
@@ -96,7 +96,7 @@ namespace exchaRazor02.Pages.Controllers
                 }
             }
 
-            return CreatedAtAction("GetDiary", new { id = diary.Id }, diary);
+            return CreatedAtAction("GetDiary", new { id = diary.id }, diary);
         }
 
         // DELETE: api/sample/5
@@ -117,7 +117,7 @@ namespace exchaRazor02.Pages.Controllers
 
         private bool DiaryExists(string id)
         {
-            return _context.diaries.Any(e => e.Id == id);
+            return _context.diaries.Any(e => e.id == id);
         }
     }
 }

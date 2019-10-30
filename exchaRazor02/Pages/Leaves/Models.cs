@@ -19,7 +19,7 @@ namespace exchaRazor02.Pages.Leaves
 		//最新のleafの日時を取得する
 		public static async Task<DateTime?> getLatest(string diaryId, ExchaDContext9 context)
 		{
-			IQueryable<Leaf> ql = context.leaves.Where(l => l.diaryId == diaryId);
+			IQueryable<Leaf> ql = context.leaves.Where(l => l.diaryid == diaryId);
 			if (ql.Count() == 0) return null;
 			return await ql.MaxAsync(l => l.time);
 		}
@@ -41,7 +41,7 @@ namespace exchaRazor02.Pages.Leaves
 			// 非公開：非表示
 
 			//交換中か
-			if (diary.retTime > DateTime.Now) {
+			if (diary.rettime > DateTime.Now) {
 				//交換中のとき、交換相手にのみ表示する
 				//未ログインか
 				if (!user.Identity.IsAuthenticated) {
@@ -62,7 +62,7 @@ namespace exchaRazor02.Pages.Leaves
 				//未ログインのとき、表示しない
 			}//ログイン中のとき
 			//持ち主ならば、表示する
-			else if (diary.Id == user.FindFirst(ClaimTypes.NameIdentifier).Value){
+			else if (diary.id == user.FindFirst(ClaimTypes.NameIdentifier).Value){
 				flag = true;
 			}
 			return flag;
@@ -84,9 +84,9 @@ namespace exchaRazor02.Pages.Leaves
 				//未ログインのとき、不可能
 			}//ログイン中のとき
 			else if (
-				(diary.Id == user.FindFirst(ClaimTypes.NameIdentifier).Value)	//日記の持ち主
+				(diary.id == user.FindFirst(ClaimTypes.NameIdentifier).Value)	//日記の持ち主
 				&& (diary.writa == WRITA.able)	//作成可能
-				&& (diary.retTime < DateTime.Now)	//返却済み
+				&& (diary.rettime < DateTime.Now)	//返却済み
 				) {
 				flag = true;
 			}
@@ -106,7 +106,7 @@ namespace exchaRazor02.Pages.Leaves
 			bool flag = false;  //戻り値
 
 			//最新のleafの日時を取得する
-			IQueryable<Leaf> ql = context.leaves.Where(l => l.diaryId == diary.Id);
+			IQueryable<Leaf> ql = context.leaves.Where(l => l.diaryid == diary.id);
 			if (ql.Count() == 0) return false;
 			DateTime latest = await ql.MaxAsync(l => l.time);
 			string authId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -116,16 +116,16 @@ namespace exchaRazor02.Pages.Leaves
 			//自分でない、かつ、両者交換可能、かつ、未申請、かつ、両者交換中でない、ならば申請可能
 			//交換可能か
 			if ((my.excha == EXCHA.able)
-				&& (my.retTime < DateTime.Now)
+				&& (my.rettime < DateTime.Now)
 				&& (diary.excha == EXCHA.able)
-				&& (diary.Id != authId)
-				&& (diary.retTime < DateTime.Now)
+				&& (diary.id != authId)
+				&& (diary.rettime < DateTime.Now)
 				) {
 				//未申請か
 				flag = !context.appli
 					.Any(a =>
-						(a.diaryId == diary.Id)
-						&& (a.leafTime == latest)
+						(a.diaryid == diary.id)
+						&& (a.leaftime == latest)
 						&& (a.apid == authId)
 						);
 			}
@@ -145,15 +145,15 @@ namespace exchaRazor02.Pages.Leaves
 
 			string authId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
 			//交換申請されているか
-			IQueryable<Leaf> leaves = context.leaves.Where(l => l.diaryId == authId);
+			IQueryable<Leaf> leaves = context.leaves.Where(l => l.diaryid == authId);
 			if (leaves.Count() != 0) {
 				DateTime latest = await leaves.MaxAsync(l => l.time);
 				Appli appli = context.appli
 					.Where(a =>
-						(a.diaryId == authId)
-						&& (a.leafTime == latest)
+						(a.diaryid == authId)
+						&& (a.leaftime == latest)
 						&& (a.accept == EXCHA_ACCEPT.yet)
-						&& (a.apid == diary.Id))
+						&& (a.apid == diary.id))
 					.FirstOrDefault();
 				if (appli != null) {
 					period = appli.period;
@@ -171,12 +171,12 @@ namespace exchaRazor02.Pages.Leaves
 		{
 			bool flag = false;  //戻り値：編集可不可フラグ
 
-			Diary diary = await context.diaries.FindAsync(leaf.diaryId);    //日記を取得
+			Diary diary = await context.diaries.FindAsync(leaf.diaryid);    //日記を取得
 			if (diary == null) return false;    //日記がないとき、不可能
 
 			//最新のleafの日時を取得する
 			DateTime latest = await context.leaves
-				.Where(l => l.diaryId == leaf.diaryId)
+				.Where(l => l.diaryid == leaf.diaryid)
 				.MaxAsync(l => l.time);
 
 			//Leafを編集する権限があるか、確認する
@@ -187,9 +187,9 @@ namespace exchaRazor02.Pages.Leaves
 				//未ログインのとき、不可能
 			}//ログイン中のとき
 			else if (
-				(diary.Id == user.FindFirst(ClaimTypes.NameIdentifier).Value)   //日記の持ち主
+				(diary.id == user.FindFirst(ClaimTypes.NameIdentifier).Value)   //日記の持ち主
 				&& (leaf.time == latest)    //最新leaf
-				&& (diary.retTime < DateTime.Now)	//返却済み
+				&& (diary.rettime < DateTime.Now)	//返却済み
 				&& (leaf.exid == null)		//コメント者なし
 				) {
 				flag = true;
@@ -207,12 +207,12 @@ namespace exchaRazor02.Pages.Leaves
 		{
 			bool flag = false;  //戻り値：コメント可不可フラグ
 
-			Diary diary = await context.diaries.FindAsync(leaf.diaryId);	//日記を取得
+			Diary diary = await context.diaries.FindAsync(leaf.diaryid);	//日記を取得
 			if (diary == null) return false;    //日記がないとき、不可能
 
 			//最新のleafの日時を取得する
 			DateTime latest = await context.leaves
-				.Where(l => l.diaryId == leaf.diaryId)
+				.Where(l => l.diaryid == leaf.diaryid)
 				.MaxAsync(l => l.time);
 
 			//Leafへコメントする権限があるか、確認する

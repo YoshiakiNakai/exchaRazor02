@@ -33,16 +33,16 @@ namespace exchaRazor02.Data
 	{
 		//コンストラクタ
 		public Diary(){}
-		public Diary(string Id, string pass, string note, DateTime last, PUBLICITY pub, EXCHA excha, WRITA writa, DateTime retTime, string exid)
+		public Diary(string id, string pass, string note, DateTime last, PUBLICITY pub, EXCHA excha, WRITA writa, DateTime rettime, string exid)
 		{
-			this.Id = Id;
+			this.id = id;
 			this.pass = pass;
 			this.note = note;
 			this.last = last;
 			this.pub = pub;
 			this.excha = excha;
 			this.writa = writa;
-			this.retTime = retTime;
+			this.rettime = rettime;
 			this.exid = exid;
 		}
 
@@ -50,7 +50,8 @@ namespace exchaRazor02.Data
 		[Required]
 		[MaxLength(255)]
 		[Display(Name = "日記ID")]
-		public string Id { get; set; }   //主キー	//慣例により「なんたらId」はキーとなる。注意。
+		public string id { get; set; }   //主キー	//慣例により「なんたらId」はキーとなる。注意。
+		//postgresは大文字小文字区別するが、引用符で括らなければ大文字を小文字に正規化する。バグったので小文字統一する
 
 		[Required]
 		[MinLength(4)]
@@ -73,7 +74,7 @@ namespace exchaRazor02.Data
 
 		[Display(Name = "返却日")]
 		[DataType(DataType.DateTime)]
-		public DateTime retTime { get; set; }	//
+		public DateTime rettime { get; set; }	//
 		public string exid { get; set; }	//交換相手
 
 		//Navigation Property
@@ -87,7 +88,7 @@ namespace exchaRazor02.Data
 		public Leaf(){}
 		public Leaf(string diaryId, DateTime time, string title, string contents, string exid, string comment)
 		{
-			this.diaryId = diaryId;
+			this.diaryid = diaryId;
 			this.time = time;
 			this.title = title;
 			this.contents = contents;
@@ -95,7 +96,7 @@ namespace exchaRazor02.Data
 			this.comment = comment;
 		}
 
-		public string diaryId { get; set; }
+		public string diaryid { get; set; }
 		[Display(Name = "記述日")]
 		[DataType(DataType.DateTime)]
 		public DateTime time { get; set; }
@@ -136,16 +137,16 @@ namespace exchaRazor02.Data
 		public Appli() { }
 		public Appli(string diaryId, DateTime leafTime, string apid, EXCHA_ACCEPT accept, int period)
 		{
-			this.diaryId = diaryId;
-			this.leafTime = leafTime;
+			this.diaryid = diaryId;
+			this.leaftime = leafTime;
 			this.apid = apid;
 			this.accept = accept;
 			this.period = period;
 		}
-		public string diaryId { get; set; }
+		public string diaryid { get; set; }
 
 		[DataType(DataType.DateTime)]
-		public DateTime leafTime { get; set; }
+		public DateTime leaftime { get; set; }
 		[Display(Name = "日記ID")]
 		public string apid { get; set; }
 		public EXCHA_ACCEPT accept { get; set; }

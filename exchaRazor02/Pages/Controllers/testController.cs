@@ -43,7 +43,7 @@ namespace exchaRazor02.Pages
 
         private bool DiaryExists(string id)
         {
-            return _context.diaries.Any(e => e.Id == id);
+            return _context.diaries.Any(e => e.id == id);
         }
     }
 }

@@ -13,7 +13,7 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="leaf.diaryId" />
+            <input type="hidden" asp-for="leaf.diaryid" />
             <input type="hidden" asp-for="leaf.time" />
             @{
                 //機能:
@@ -79,7 +79,7 @@
     </div>
 </div>
 
-<hr /><a href="~/Leaves/Index?id=@Model.leaf.diaryId" class="nrmLink">戻る</a>
+<hr /><a href="~/Leaves/Index?id=@Model.leaf.diaryid" class="nrmLink">戻る</a>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

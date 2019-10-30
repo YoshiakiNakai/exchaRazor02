@@ -63,7 +63,7 @@ namespace exchaRazor02.Pages.Leaves
 			//	).FirstOrDefault();
 			//
 			//DateTimeの条件をWhere()でうまく設定できないため、IListで検索する
-			IList<Leaf> Lleaves = _context.leaves.Where(l => l.diaryId == id).ToList();
+			IList<Leaf> Lleaves = _context.leaves.Where(l => l.diaryid == id).ToList();
 			for (int i = 0; i < Lleaves.Count(); i++)
 			{
 				if (Lleaves[i].time.ToString() == time) {
@@ -76,7 +76,7 @@ namespace exchaRazor02.Pages.Leaves
 				//leafが存在しないとき
 				//leafを作成
 				leaf = new Leaf();
-				leaf.diaryId = id;
+				leaf.diaryid = id;
 
 				createFlag = DiaryAuth.authCreateLeaf(user, diary);     //作成権限を取得
 				editFlag = false;
@@ -109,11 +109,11 @@ namespace exchaRazor02.Pages.Leaves
 			}
 			//基本情報の取得
 			ClaimsPrincipal user = HttpContext.User;
-			Diary objDiary = await _context.diaries.FindAsync(leaf.diaryId);
+			Diary objDiary = await _context.diaries.FindAsync(leaf.diaryid);
 			if (objDiary == null) return StatusCode(404);
 			//Leaf dbLeaf = _context.leaves.Where(l => (l.diaryId == leaf.diaryId && l.time == leaf.time)).FirstOrDefault();
 			Leaf dbLeaf = null;
-			IList<Leaf> Lleaves = _context.leaves.Where(l => l.diaryId == leaf.diaryId).ToList();
+			IList<Leaf> Lleaves = _context.leaves.Where(l => l.diaryid == leaf.diaryid).ToList();
 			for (int i = 0; i < Lleaves.Count(); i++)
 			{
 				if (Lleaves[i].time.ToString() == leaf.time.ToString()) {
@@ -137,7 +137,7 @@ namespace exchaRazor02.Pages.Leaves
 			if (createFlag) {
 				//作成のとき
 				//leafの作成
-				leaf.diaryId = user.FindFirst(ClaimTypes.NameIdentifier).Value;
+				leaf.diaryid = user.FindFirst(ClaimTypes.NameIdentifier).Value;
 				leaf.time = DateTime.Now;
 				leaf.exid = null;
 				leaf.comment = null;
@@ -174,7 +174,7 @@ namespace exchaRazor02.Pages.Leaves
 			await _context.SaveChangesAsync();
 			//catch (DbUpdateConcurrencyException) {/* 存在しないときのエラー */}
 
-            return Redirect("~/Leaves/Index?id=" + leaf.diaryId);
+            return Redirect("~/Leaves/Index?id=" + leaf.diaryid);
         }
     }
 }

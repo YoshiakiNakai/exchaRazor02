@@ -53,7 +53,7 @@ namespace exchaRazor02.Pages
 			this.Diary.last = DateTime.Now;
 			this.Diary.excha = EXCHA.disable;
 			this.Diary.writa = WRITA.able;
-			this.Diary.retTime = DateTime.Now;
+			this.Diary.rettime = DateTime.Now;
 			this.Diary.exid = null;
 
 			//DBへ保存する
@@ -63,7 +63,7 @@ namespace exchaRazor02.Pages
 			} catch (DbUpdateException ex) {
 				_logger.Log(LogLevel.Error, ex.Message);
 				//id重複確認
-				if (_context.diaries.Any(e => e.Id == Diary.Id)) {
+				if (_context.diaries.Any(e => e.id == Diary.id)) {
 					this.message = "エラー：既に使用されているIDです";
 					return Page();
 				} else {

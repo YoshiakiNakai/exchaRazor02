@@ -56,7 +56,7 @@ namespace exchaRazor02.Pages.Controllers
 
 			//最新のleafの日時を取得
 			DateTime latest = await _context.leaves
-				.Where(l => l.diaryId == diaryId)
+				.Where(l => l.diaryid == diaryId)
 				.MaxAsync(l => l.time);
 
 			Appli appli = new Appli(diaryId, latest, authId, EXCHA_ACCEPT.yet, exchaPeriod);
@@ -68,8 +68,8 @@ namespace exchaRazor02.Pages.Controllers
 
 				//申請済みか確認
 				if (_context.appli.Any(a => (
-						(a.diaryId == appli.diaryId)
-						&& (a.leafTime == appli.leafTime)
+						(a.diaryid == appli.diaryid)
+						&& (a.leaftime == appli.leaftime)
 						&& (a.apid == authId)
 						))) {
 					return false;	//Conflict();
@@ -120,12 +120,12 @@ namespace exchaRazor02.Pages.Controllers
 			//appliへ承諾を登録
 			string authId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 			DateTime latest = await _context.leaves
-				.Where(l => l.diaryId == authId)
+				.Where(l => l.diaryid == authId)
 				.MaxAsync(l => l.time);
 			Appli appli = await _context.appli
 				.Where(a => 
-					(a.diaryId == authId)
-					&& (a.leafTime == latest)
+					(a.diaryid == authId)
+					&& (a.leaftime == latest)
 					&& (a.apid == exid)
 				)
 				.FirstOrDefaultAsync();
@@ -137,10 +137,10 @@ namespace exchaRazor02.Pages.Controllers
 				//お互いの日記に交換を記録
 				Diary my = await _context.diaries.FindAsync(authId);
 				Diary your = await _context.diaries.FindAsync(appli.apid);
-				my.exid = your.Id;
-				my.retTime = DateTime.Now.AddHours(appli.period);
-				your.exid = my.Id;
-				your.retTime = DateTime.Now.AddHours(appli.period);
+				my.exid = your.id;
+				my.rettime = DateTime.Now.AddHours(appli.period);
+				your.exid = my.id;
+				your.rettime = DateTime.Now.AddHours(appli.period);
 				_context.Attach(my).State = EntityState.Modified;
 				_context.Attach(your).State = EntityState.Modified;
 			}

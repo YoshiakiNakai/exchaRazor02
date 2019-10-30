@@ -15,7 +15,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Npgsql;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace exchaRazor02
 {
@@ -42,7 +43,7 @@ namespace exchaRazor02
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
 			//DBの使用
-			services.AddDbContext<ExchaDContext9>(options => options.UseSqlServer(Configuration.GetConnectionString("ExchaDContext9")));
+			services.AddDbContext<ExchaDContext9>(options => options.UseNpgsql(Configuration.GetConnectionString("ExchaDContext9")));
 
 			//Razorの使用
 			services.AddRazorPages();
