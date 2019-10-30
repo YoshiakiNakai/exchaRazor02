@@ -27,7 +27,7 @@ namespace exchaRazor02.Pages
 			diary = new Diary();
 		}
 
-		public async void OnGetAsync()
+		public async Task OnGetAsync()
         {
 			//HttpContext.User.Identity.IsAuthenticated
 			string authId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
