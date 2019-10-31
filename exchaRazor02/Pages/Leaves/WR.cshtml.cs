@@ -154,10 +154,10 @@ namespace exchaRazor02.Pages.Leaves
 				dbLeaf.comment = leaf.comment;
 				_context.Attach(dbLeaf).State = EntityState.Modified;
 				//日記フラグの変更
-				Diary your = await _context.diaries.FindAsync(user.FindFirst(ClaimTypes.NameIdentifier).Value);
-				your.writa = WRITA.able;
-				objDiary.excha = EXCHA.disable;
-				_context.Attach(your).State = EntityState.Modified;
+				Diary my = await _context.diaries.FindAsync(user.FindFirst(ClaimTypes.NameIdentifier).Value);
+				my.writa = WRITA.able;
+				my.excha = EXCHA.disable;
+				_context.Attach(my).State = EntityState.Modified;
 				_context.Attach(objDiary).State = EntityState.Modified;
 			}//編集か
 			else if(editFlag) {
